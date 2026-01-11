@@ -1,0 +1,566 @@
+{
+  "version": 8,
+  "name": "gsi-style-maniawase",
+  "metadata": {"maputnik:renderer": "mbgljs"},
+  "sources": {
+    "gsibv-vectortile-source-1-4-16": {
+      "type": "vector",
+      "tiles": [
+        "https://cyberjapandata.gsi.go.jp/xyz/experimental_bvmap/{z}/{x}/{y}.pbf"
+      ],
+      "maxzoom": 16
+    }
+  },
+  "sprite": "https://gsi-cyberjapan.github.io/gsivectortile-mapbox-gl-js/sprite/std",
+  "glyphs": "https://maps.gsi.go.jp/xyz/noto-jp/{fontstack}/{range}.pbf",
+  "layers": [
+    {
+      "id": "contour",
+      "type": "line",
+      "source": "gsibv-vectortile-source-1-4-16",
+      "source-layer": "contour",
+      "minzoom": 11,
+      "paint": {
+        "line-color": ["match", ["get", "altiFlag"], 0, "#ddccbb", "#eeddcc"],
+        "line-width": ["match", ["get", "altiFlag"], 0, 1.4, 0.7],
+        "line-opacity": {"stops": [[13.5, 1], [14, 0.25], [16.5, 1]]}
+      }
+    },
+    {
+      "id": "contour-label",
+      "type": "symbol",
+      "source": "gsibv-vectortile-source-1-4-16",
+      "source-layer": "contour",
+      "layout": {
+        "text-allow-overlap": true,
+        "text-ignore-placement": true,
+        "symbol-placement": "line",
+        "text-max-width": 999,
+        "text-size": {"stops": [[14, 10], [17, 13]]},
+        "text-max-angle": 360,
+        "text-anchor": "center",
+        "text-pitch-alignment": "viewport",
+        "text-rotation-alignment": "map",
+        "icon-pitch-alignment": "auto",
+        "icon-rotation-alignment": "auto",
+        "text-field": "{alti}",
+        "text-font": ["NotoSansCJKjp-Regular"],
+        "icon-allow-overlap": true,
+        "text-keep-upright": true
+      },
+      "paint": {
+        "text-color": ["match", ["get", "altiFlag"], 0, "#ddccbb", "#eeddcc"],
+        "text-opacity": {"stops": [[14, 0.25], [16.5, 1]]},
+        "text-halo-color": "#ffffff",
+        "text-halo-width": 2
+      }
+    },
+    {
+      "id": "water",
+      "type": "fill",
+      "source": "gsibv-vectortile-source-1-4-16",
+      "source-layer": "waterarea",
+      "paint": {"fill-color": "rgba(204, 221, 255, 1)"}
+    },
+    {
+      "id": "structurel",
+      "type": "fill",
+      "source": "gsibv-vectortile-source-1-4-16",
+      "source-layer": "structurel",
+      "filter": ["all", ["in", "ftCode", 5501, 5511, 5514, 5515, 5532, 5501]],
+      "paint": {"fill-color": "#bbbbbb"}
+    },
+    {
+      "id": "coastline",
+      "type": "line",
+      "source": "gsibv-vectortile-source-1-4-16",
+      "source-layer": "coastline",
+      "paint": {"line-color": "#444466", "line-width": 1}
+    },
+    {
+      "id": "landforma",
+      "type": "fill",
+      "source": "gsibv-vectortile-source-1-4-16",
+      "source-layer": "landforma",
+      "paint": {
+        "fill-color": [
+          "match",
+          ["get", "ftCode"],
+          7401,
+          "#ddffee",
+          7402,
+          "#EEEEFF",
+          7403,
+          "#FFFFDD",
+          "#FFFFFF"
+        ]
+      }
+    },
+    {
+      "id": "river",
+      "type": "line",
+      "source": "gsibv-vectortile-source-1-4-16",
+      "source-layer": "river",
+      "paint": {"line-color": "#ccddff"}
+    },
+    {
+      "id": "boundary",
+      "type": "line",
+      "source": "gsibv-vectortile-source-1-4-16",
+      "source-layer": "boundary",
+      "paint": {
+        "line-color": "#aa99bb",
+        "line-width": 2,
+        "line-dasharray": [3, 3]
+      }
+    },
+    {
+      "id": "searoute",
+      "type": "line",
+      "source": "gsibv-vectortile-source-1-4-16",
+      "source-layer": "searoute",
+      "paint": {
+        "line-color": "#bbbbd7",
+        "line-dasharray": [10, 10],
+        "line-width": 1
+      }
+    },
+    {
+      "id": "road",
+      "type": "line",
+      "source": "gsibv-vectortile-source-1-4-16",
+      "source-layer": "road",
+      "maxzoom": 14,
+      "filter": ["all", [">=", "ftCode", 2700], ["<=", "ftCode", 2799]],
+      "layout": {
+        "line-cap": "square",
+        "line-join": "round",
+        "line-sort-key":  [
+          "+",
+          [
+            "match",
+            ["get", "rdCtg"],
+            0,
+            30,
+            1,
+            20,
+            3,
+            40,
+            10
+          ],
+          ["to-number", ["get", "rnkWidth"]]
+        ]
+      },
+      "paint": {
+        "line-color": [
+          "case",
+          ["==", ["get", "motorway"], 1],
+          "#bbddbb",
+          [
+            "match",
+            ["get", "rdCtg"],
+            0,
+            "#eecc88",
+            1,
+            "#dddd99",
+            3,
+            "#aaccaa",
+            "#dddddd"
+          ]
+        ],
+        "line-width": [
+          "case",
+          ["all", ["has", "rnkWidth"], ["<=", ["get", "rnkWidth"], 4]],
+          ["+", ["get", "rnkWidth"], 1],
+          1
+        ],
+        "line-opacity": [
+          "match",
+          ["get", "ftCode"],
+          [2704, 2714],
+          0.5,
+          1
+        ]
+      }
+    },
+    {
+      "id": "road-boundary-z16",
+      "type": "line",
+      "source": "gsibv-vectortile-source-1-4-16",
+      "source-layer": "road",
+      "minzoom": 16,
+      "filter": [
+        "any",
+        ["all", [">=", "ftCode", 2200], ["<=", "ftCode", 2209]],
+        ["all", [">=", "ftCode", 2230], ["<=", "ftCode", 2299]]
+      ],
+      "paint": {"line-color": "rgba(204, 204, 204, 1)", "line-width": 2}
+    },
+    {
+      "id": "road-boundary-dash-z16",
+      "type": "line",
+      "source": "gsibv-vectortile-source-1-4-16",
+      "source-layer": "road",
+      "minzoom": 16,
+      "filter": ["all", [">=", "ftCode", 2220], ["<=", "ftCode", 2229]],
+      "paint": {
+        "line-color": "rgba(204, 204, 204, 1)",
+        "line-width": 2,
+        "line-dasharray": [1, 1]
+      }
+    },
+    {
+      "id": "road-footway",
+      "type": "line",
+      "source": "gsibv-vectortile-source-1-4-16",
+      "source-layer": "road",
+      "filter": ["all", ["==", "ftCode", 2721]],
+      "paint": {
+        "line-color": {"stops": [[15, "#dddddd"], [16, "#774444"]]},
+        "line-width": {"stops": [[15, 1], [16, 2]]},
+        "line-dasharray": [6, 1]
+      }
+    },
+    {
+      "id": "road-z14-boundary",
+      "type": "line",
+      "source": "gsibv-vectortile-source-1-4-16",
+      "source-layer": "road",
+      "minzoom": 14,
+      "maxzoom": 16.25,
+      "filter": [
+        "all",
+        [">=", "ftCode", 2700],
+        ["<=", "ftCode", 2799],
+        ["!=", "ftCode", 2721]
+      ],
+      "layout": {
+        "line-cap": "square",
+        "line-join": "round",
+        "line-sort-key":  [
+          "+",
+          [
+            "match",
+            ["get", "rdCtg"],
+            0,
+            30,
+            1,
+            20,
+            3,
+            40,
+            10
+          ],
+          ["to-number", ["get", "rnkWidth"]]
+        ]
+      },
+      "paint": {
+        "line-color": [
+          "case",
+          ["==", ["get", "motorway"], 1],
+          "#bbddbb",
+          [
+            "match",
+            ["get", "rdCtg"],
+            0,
+            "#eecc88",
+            1,
+            "#dddd99",
+            3,
+            "#aaccaa",
+            "#dddddd"
+          ]
+        ],
+        "line-opacity": [
+          "match",
+          ["get", "ftCode"],
+          [2704, 2714],
+          0.5,
+          1
+        ],
+        "line-width": 1,
+        "line-gap-width": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          14,
+          ["+", ["to-number", ["get", "rnkWidth"]], 1],
+          16,
+          [
+            "match",
+            ["to-number", ["get", "rnkWidth"]],
+            0,
+            4,
+            1,
+            8,
+            2,
+            12,
+            3,
+            18,
+            28
+          ]
+        ]
+      }
+    },
+    {
+      "id": "road-z14",
+      "type": "line",
+      "source": "gsibv-vectortile-source-1-4-16",
+      "source-layer": "road",
+      "minzoom": 14,
+      "maxzoom": 16.25,
+      "filter": [
+        "all",
+        [">=", "ftCode", 2700],
+        ["<=", "ftCode", 2799],
+        ["!=", "ftCode", 2721]
+      ],
+      "layout": {
+        "line-cap": "square",
+        "line-join": "round",
+        "line-sort-key":  [
+          "+",
+          [
+            "match",
+            ["get", "rdCtg"],
+            0,
+            30,
+            1,
+            20,
+            3,
+            40,
+            10
+          ],
+          ["to-number", ["get", "rnkWidth"]]
+        ]
+      },
+      "paint": {
+        "line-color": [
+          "case",
+          ["==", ["get", "motorway"], 1],
+          "#bbddbb",
+          [
+            "match",
+            ["get", "rdCtg"],
+            0,
+            "#ffddaa",
+            1,
+            "#ffffee",
+            3,
+            "#bbddbb",
+            "#ffffff"
+          ]
+        ],
+        "line-width": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          14,
+          ["+", ["to-number", ["get", "rnkWidth"]], 1],
+          16,
+          [
+            "match",
+            ["to-number", ["get", "rnkWidth"]],
+            0,
+            4,
+            1,
+            8,
+            2,
+            12,
+            3,
+            18,
+            28
+          ]
+        ],
+        "line-opacity": [
+          "match",
+          ["get", "ftCode"],
+          [2704, 2714],
+          0.5,
+          1
+        ]
+      }
+    },
+    {
+      "id": "railway",
+      "type": "line",
+      "source": "gsibv-vectortile-source-1-4-16",
+      "source-layer": "railway",
+      "maxzoom": 16,
+      "filter": ["all", ["==", "ftCode", 8201]],
+      "paint": {
+        "line-color": [
+          "match",
+          ["floor", ["/", ["to-number", ["get", "rtCode"]], 1000000]],
+          [40201, 40216],
+          "#666666",
+          "#888888"
+        ],
+        "line-width": {"stops": [[8, 1], [12, 3]]},
+        "line-opacity": ["match", ["get", "railState"], [2, 3, 100], 0.5, 1]
+      }
+    },
+    {
+      "id": "railway-z16",
+      "type": "line",
+      "source": "gsibv-vectortile-source-1-4-16",
+      "source-layer": "railway",
+      "filter": ["any", ["!has", "ftCode"], ["!=", "ftCode", 8201]],
+      "paint": {
+        "line-color": "#888888",
+        "line-opacity": [
+          "case",
+          ["any", ["==", ["get", "ftCode"], 2804]],
+          0.5,
+          1
+        ],
+        "line-width": 2
+      }
+    },
+    {
+      "id": "building",
+      "type": "fill",
+      "source": "gsibv-vectortile-source-1-4-16",
+      "source-layer": "building",
+      "minzoom": 15,
+      "paint": {
+        "fill-color": "rgba(255, 238, 187, 1)",
+        "fill-outline-color": "rgba(238, 221, 153, 1)"
+      }
+    },
+    {
+      "id": "railway-station",
+      "type": "line",
+      "source": "gsibv-vectortile-source-1-4-16",
+      "source-layer": "railway",
+      "filter": ["all", ["has", "staCode"], ["!=", "staCode", "0"]],
+      "paint": {
+        "line-color": [
+          "match",
+          ["get", "railState"],
+          [2, 3],
+          "#ffeeee",
+          "#ffaacc"
+        ],
+        "line-width": 5
+      }
+    },
+    {
+      "id": "transp",
+      "type": "symbol",
+      "source": "gsibv-vectortile-source-1-4-16",
+      "source-layer": "transp",
+      "layout": {
+        "icon-image": [
+          "match",
+          ["get", "ftCode"],
+          2901,
+          "国道番号-20",
+          2903,
+          "都市高速道路番号-20",
+          2904,
+          "高速道路番号-20",
+          ""
+        ],
+        "icon-size": 0.5,
+        "text-size": 10,
+        "text-offset": [0, -0.1],
+        "text-pitch-alignment": "viewport",
+        "text-rotation-alignment": "viewport",
+        "icon-pitch-alignment": "viewport",
+        "icon-rotation-alignment": "viewport",
+        "text-field": [
+          "case",
+          ["all", ["has", "eRNo"], ["!=", ["get", "eRNo"], 0]],
+          ["get", "eRNo"],
+          ["all", ["has", "nRNo"], ["!=", ["get", "nRNo"], 0]],
+          ["get", "nRNo"],
+          ["get", "uRNo"]
+        ],
+        "text-font": ["NotoSansCJKjp-Regular"],
+        "symbol-placement": "point",
+        "icon-allow-overlap": true,
+        "text-keep-upright": true,
+        "text-allow-overlap": false,
+        "symbol-z-order": "auto",
+        "text-max-width": 100,
+        "visibility": "visible"
+      },
+      "paint": {"text-color": "#ffffff"}
+    },
+    {
+      "id": "label",
+      "type": "symbol",
+      "source": "gsibv-vectortile-source-1-4-16",
+      "source-layer": "label",
+      "filter": ["all", ["!in", "annoCtg", 333, 334, 411, 421]],
+      "layout": {
+        "text-field": "{knj}",
+        "text-font": ["NotoSansCJKjp-Regular"],
+        "text-size": ["match", ["get", "annoCtg"], [422], 14, 10],
+        "symbol-sort-key": ["case", ["==", ["get", "annoCtg"], 422], 1, 10]
+      },
+      "paint": {
+        "text-halo-color": "#ffffff",
+        "text-halo-width": 2,
+        "icon-color": "#000000",
+        "text-color": [
+          "match",
+          ["get", "annoCtg"],
+          422,
+          "#449944",
+          [321, 322, 323, 343, 344, 345, 347, 348],
+          "#7777DD",
+          [311, 312, 313, 314, 315, 316, 333],
+          "#774444",
+          "#000000"
+        ]
+      }
+    },
+    {
+      "id": "label-transportway",
+      "type": "symbol",
+      "source": "gsibv-vectortile-source-1-4-16",
+      "source-layer": "label",
+      "filter": ["any", ["in", "annoCtg", 411, 421]],
+      "layout": {
+        "text-field": "{knj}",
+        "text-font": ["NotoSansCJKjp-Regular"],
+        "text-size": {"stops": [[10, 12], [13, 15]]},
+        "text-allow-overlap": true,
+        "text-rotate": [
+          "case",
+          ["==", ["get", "arrng"], 2],
+          ["*", ["+", ["to-number", ["get", "arrngAgl"]], 90], -1],
+          ["*", ["to-number", ["get", "arrngAgl"]], -1]
+        ]
+      },
+      "paint": {
+        "text-halo-color": "#ffffff",
+        "text-halo-width": 2,
+        "text-color": [
+          "match",
+          ["get", "annoCtg"],
+          [411, 421],
+          "#449944",
+          "#000000"
+        ]
+      }
+    },
+    {
+      "id": "label-country",
+      "type": "symbol",
+      "source": "gsibv-vectortile-source-1-4-16",
+      "source-layer": "label",
+      "filter": ["any", ["in", "annoCtg", 140, 110]],
+      "layout": {
+        "text-field": "{knj}",
+        "text-font": ["NotoSansCJKjp-Bold"],
+        "text-size": 20,
+        "text-allow-overlap": true,
+        "text-rotate": 0
+      },
+      "paint": {"text-halo-color": "#ffffff", "text-halo-width": 2}
+    }
+  ],
+  "id": "6d1cc9m0x"
+}
