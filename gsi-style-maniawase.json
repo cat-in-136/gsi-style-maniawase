@@ -15,6 +15,32 @@
   "glyphs": "https://maps.gsi.go.jp/xyz/noto-jp/{fontstack}/{range}.pbf",
   "layers": [
     {
+      "id": "water",
+      "type": "fill",
+      "source": "gsibv-vectortile-source-1-4-16",
+      "source-layer": "waterarea",
+      "paint": {"fill-color": "rgba(204, 221, 255, 1)"}
+    },
+    {
+      "id": "landforma",
+      "type": "fill",
+      "source": "gsibv-vectortile-source-1-4-16",
+      "source-layer": "landforma",
+      "paint": {
+        "fill-color": [
+          "match",
+          ["get", "ftCode"],
+          7401,
+          "#ddffee",
+          7402,
+          "#EEEEFF",
+          7403,
+          "#FFFFDD",
+          "#FFFFFF"
+        ]
+      }
+    },
+    {
       "id": "contour",
       "type": "line",
       "source": "gsibv-vectortile-source-1-4-16",
@@ -56,13 +82,6 @@
       }
     },
     {
-      "id": "water",
-      "type": "fill",
-      "source": "gsibv-vectortile-source-1-4-16",
-      "source-layer": "waterarea",
-      "paint": {"fill-color": "rgba(204, 221, 255, 1)"}
-    },
-    {
       "id": "structurel",
       "type": "fill",
       "source": "gsibv-vectortile-source-1-4-16",
@@ -71,30 +90,18 @@
       "paint": {"fill-color": "#bbbbbb"}
     },
     {
+      "id": "wstructurea",
+      "type": "fill",
+      "source": "gsibv-vectortile-source-1-4-16",
+      "source-layer": "wstructurea",
+      "paint": {"fill-color": "#ffffff"}
+    },
+    {
       "id": "coastline",
       "type": "line",
       "source": "gsibv-vectortile-source-1-4-16",
       "source-layer": "coastline",
       "paint": {"line-color": "#444466", "line-width": 1}
-    },
-    {
-      "id": "landforma",
-      "type": "fill",
-      "source": "gsibv-vectortile-source-1-4-16",
-      "source-layer": "landforma",
-      "paint": {
-        "fill-color": [
-          "match",
-          ["get", "ftCode"],
-          7401,
-          "#ddffee",
-          7402,
-          "#EEEEFF",
-          7403,
-          "#FFFFDD",
-          "#FFFFFF"
-        ]
-      }
     },
     {
       "id": "river",
@@ -108,10 +115,22 @@
       "type": "line",
       "source": "gsibv-vectortile-source-1-4-16",
       "source-layer": "boundary",
+      "filter": ["any", ["!in", "ftCode", 1211, 1212, 51211, 51212]],
+      "paint": {
+        "line-color": "#dddddd",
+        "line-width": 1
+      }
+    },
+    {
+      "id": "boundary-country",
+      "type": "line",
+      "source": "gsibv-vectortile-source-1-4-16",
+      "source-layer": "boundary",
+      "filter": ["any", ["in", "ftCode", 1211, 1212, 51211, 51212]],
       "paint": {
         "line-color": "#aa99bb",
-        "line-width": 2,
-        "line-dasharray": [3, 3]
+        "line-width": ["match", ["get", "ftCode"], 1211, 3, 1212, 2, 1],
+        "line-dasharray": [7, 2, 1, 2]
       }
     },
     {
@@ -135,19 +154,9 @@
       "layout": {
         "line-cap": "square",
         "line-join": "round",
-        "line-sort-key":  [
+        "line-sort-key": [
           "+",
-          [
-            "match",
-            ["get", "rdCtg"],
-            0,
-            30,
-            1,
-            20,
-            3,
-            40,
-            10
-          ],
+          ["match", ["get", "rdCtg"], 0, 30, 1, 20, 3, 40, 10],
           ["to-number", ["get", "rnkWidth"]]
         ]
       },
@@ -155,7 +164,7 @@
         "line-color": [
           "case",
           ["==", ["get", "motorway"], 1],
-          "#bbddbb",
+          "#aaccaa",
           [
             "match",
             ["get", "rdCtg"],
@@ -174,13 +183,7 @@
           ["+", ["get", "rnkWidth"], 1],
           1
         ],
-        "line-opacity": [
-          "match",
-          ["get", "ftCode"],
-          [2704, 2714],
-          0.5,
-          1
-        ]
+        "line-opacity": ["match", ["get", "ftCode"], [2704, 2714], 0.5, 1]
       }
     },
     {
@@ -237,19 +240,9 @@
       "layout": {
         "line-cap": "square",
         "line-join": "round",
-        "line-sort-key":  [
+        "line-sort-key": [
           "+",
-          [
-            "match",
-            ["get", "rdCtg"],
-            0,
-            30,
-            1,
-            20,
-            3,
-            40,
-            10
-          ],
+          ["match", ["get", "rdCtg"], 0, 30, 1, 20, 3, 40, 10],
           ["to-number", ["get", "rnkWidth"]]
         ]
       },
@@ -257,7 +250,7 @@
         "line-color": [
           "case",
           ["==", ["get", "motorway"], 1],
-          "#bbddbb",
+          "#aaccaa",
           [
             "match",
             ["get", "rdCtg"],
@@ -270,13 +263,7 @@
             "#dddddd"
           ]
         ],
-        "line-opacity": [
-          "match",
-          ["get", "ftCode"],
-          [2704, 2714],
-          0.5,
-          1
-        ],
+        "line-opacity": ["match", ["get", "ftCode"], [2704, 2714], 0.5, 1],
         "line-width": 1,
         "line-gap-width": [
           "interpolate",
@@ -317,19 +304,9 @@
       "layout": {
         "line-cap": "square",
         "line-join": "round",
-        "line-sort-key":  [
+        "line-sort-key": [
           "+",
-          [
-            "match",
-            ["get", "rdCtg"],
-            0,
-            30,
-            1,
-            20,
-            3,
-            40,
-            10
-          ],
+          ["match", ["get", "rdCtg"], 0, 30, 1, 20, 3, 40, 10],
           ["to-number", ["get", "rnkWidth"]]
         ]
       },
@@ -371,13 +348,7 @@
             28
           ]
         ],
-        "line-opacity": [
-          "match",
-          ["get", "ftCode"],
-          [2704, 2714],
-          0.5,
-          1
-        ]
+        "line-opacity": ["match", ["get", "ftCode"], [2704, 2714], 0.5, 1]
       }
     },
     {
