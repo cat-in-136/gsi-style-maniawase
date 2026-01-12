@@ -522,11 +522,21 @@
       "type": "symbol",
       "source": "gsibv-vectortile-source-1-4-16",
       "source-layer": "label",
-      "filter": ["any", ["in", "annoCtg", 140, 110]],
+      "filter": ["any", ["in", "annoCtg", 140, 110, 210]],
       "layout": {
         "text-field": "{knj}",
         "text-font": ["NotoSansCJKjp-Bold"],
-        "text-size": 20,
+        "text-size": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          6,
+          20,
+          14,
+          ["match", ["get", "annoCtg"], 210, 14, 20],
+          16,
+          20
+        ],
         "text-allow-overlap": true,
         "text-rotate": 0
       },
