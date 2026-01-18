@@ -260,7 +260,7 @@
             "#dddd99",
             3,
             "#aaccaa",
-            "#dddddd"
+            "#bbbbbb"
           ]
         ],
         "line-opacity": ["match", ["get", "ftCode"], [2704, 2714], 0.5, 1],
