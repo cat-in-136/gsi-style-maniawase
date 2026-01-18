@@ -19,7 +19,7 @@
       "type": "fill",
       "source": "gsibv-vectortile-source-1-4-16",
       "source-layer": "waterarea",
-      "paint": {"fill-color": "rgba(204, 221, 255, 1)"}
+      "paint": {"fill-color": "#d0ebff"}
     },
     {
       "id": "landforma",
@@ -31,12 +31,12 @@
           "match",
           ["get", "ftCode"],
           7401,
-          "#ddffee",
+          "#ebfbee",
           7402,
-          "#EEEEFF",
+          "#edf2ff",
           7403,
-          "#FFFFDD",
-          "#FFFFFF"
+          "#fff9db",
+          "#f8f9fa"
         ]
       }
     },
@@ -47,7 +47,7 @@
       "source-layer": "contour",
       "minzoom": 11,
       "paint": {
-        "line-color": ["match", ["get", "altiFlag"], 0, "#ddccbb", "#eeddcc"],
+        "line-color": ["match", ["get", "altiFlag"], 0, "#ba9f89", "#d9c8b6"],
         "line-width": ["match", ["get", "altiFlag"], 0, 1.4, 0.7],
         "line-opacity": {"stops": [[13.5, 1], [14, 0.25], [16.5, 1]]}
       }
@@ -75,7 +75,7 @@
         "text-keep-upright": true
       },
       "paint": {
-        "text-color": ["match", ["get", "altiFlag"], 0, "#ddccbb", "#eeddcc"],
+        "text-color": ["match", ["get", "altiFlag"], 0, "#ba9f89", "#d9c8b6"],
         "text-opacity": {"stops": [[14, 0.25], [16.5, 1]]},
         "text-halo-color": "#ffffff",
         "text-halo-width": 2
@@ -87,7 +87,7 @@
       "source": "gsibv-vectortile-source-1-4-16",
       "source-layer": "structurel",
       "filter": ["all", ["in", "ftCode", 5501, 5511, 5514, 5515, 5532, 5501]],
-      "paint": {"fill-color": "#bbbbbb"}
+      "paint": {"fill-color": "#adb5bd"}
     },
     {
       "id": "wstructurea",
@@ -101,14 +101,14 @@
       "type": "line",
       "source": "gsibv-vectortile-source-1-4-16",
       "source-layer": "coastline",
-      "paint": {"line-color": "#444466", "line-width": 1}
+      "paint": {"line-color": "#364fc7", "line-width": 1}
     },
     {
       "id": "river",
       "type": "line",
       "source": "gsibv-vectortile-source-1-4-16",
       "source-layer": "river",
-      "paint": {"line-color": "#ccddff"}
+      "paint": {"line-color": "#a5d8ff"}
     },
     {
       "id": "boundary",
@@ -117,7 +117,7 @@
       "source-layer": "boundary",
       "filter": ["any", ["!in", "ftCode", 1211, 1212, 51211, 51212]],
       "paint": {
-        "line-color": "#dddddd",
+        "line-color": "#dee2e6",
         "line-width": 1
       }
     },
@@ -128,7 +128,7 @@
       "source-layer": "boundary",
       "filter": ["any", ["in", "ftCode", 1211, 1212, 51211, 51212]],
       "paint": {
-        "line-color": "#aa99bb",
+        "line-color": "#be4bdb",
         "line-width": ["match", ["get", "ftCode"], 1211, 3, 1212, 2, 1],
         "line-dasharray": [7, 2, 1, 2]
       }
@@ -164,17 +164,17 @@
         "line-color": [
           "case",
           ["==", ["get", "motorway"], 1],
-          "#aaccaa",
+          "#20c997",
           [
             "match",
             ["get", "rdCtg"],
             0,
-            "#eecc88",
+            "#ff922b",
             1,
-            "#dddd99",
+            "#fcc419",
             3,
-            "#aaccaa",
-            "#dddddd"
+            "#20c997",
+            "#dee2e6"
           ]
         ],
         "line-width": [
@@ -197,7 +197,7 @@
         ["all", [">=", "ftCode", 2200], ["<=", "ftCode", 2209]],
         ["all", [">=", "ftCode", 2230], ["<=", "ftCode", 2299]]
       ],
-      "paint": {"line-color": "rgba(204, 204, 204, 1)", "line-width": 2}
+      "paint": {"line-color": "#ced4da", "line-width": 2}
     },
     {
       "id": "road-boundary-dash-z16",
@@ -207,7 +207,7 @@
       "minzoom": 16,
       "filter": ["all", [">=", "ftCode", 2220], ["<=", "ftCode", 2229]],
       "paint": {
-        "line-color": "rgba(204, 204, 204, 1)",
+        "line-color": "#ced4da",
         "line-width": 2,
         "line-dasharray": [1, 1]
       }
@@ -219,7 +219,7 @@
       "source-layer": "road",
       "filter": ["all", ["==", "ftCode", 2721]],
       "paint": {
-        "line-color": {"stops": [[15, "#dddddd"], [16, "#774444"]]},
+        "line-color": {"stops": [[15, "#dee2e6"], [16, "#664d3c"]]},
         "line-width": {"stops": [[15, 1], [16, 2]]},
         "line-dasharray": [6, 1]
       }
@@ -250,17 +250,17 @@
         "line-color": [
           "case",
           ["==", ["get", "motorway"], 1],
-          "#aaccaa",
+          "#20c997",
           [
             "match",
             ["get", "rdCtg"],
             0,
-            "#eecc88",
+            "#ff922b",
             1,
-            "#dddd99",
+            "#fcc419",
             3,
-            "#aaccaa",
-            "#bbbbbb"
+            "#20c997",
+            "#adb5bd"
           ]
         ],
         "line-opacity": ["match", ["get", "ftCode"], [2704, 2714], 0.5, 1],
@@ -314,16 +314,16 @@
         "line-color": [
           "case",
           ["==", ["get", "motorway"], 1],
-          "#bbddbb",
+          "#b2f2bb",
           [
             "match",
             ["get", "rdCtg"],
             0,
-            "#ffddaa",
+            "#ffd8a8",
             1,
-            "#ffffee",
+            "#ffec99",
             3,
-            "#bbddbb",
+            "#b2f2bb",
             "#ffffff"
           ]
         ],
@@ -363,8 +363,8 @@
           "match",
           ["floor", ["/", ["to-number", ["get", "rtCode"]], 1000000]],
           [40201, 40216],
-          "#666666",
-          "#888888"
+          "#343a40",
+          "#495057"
         ],
         "line-width": {"stops": [[8, 1], [12, 3]]},
         "line-opacity": ["match", ["get", "railState"], [2, 3, 100], 0.5, 1]
@@ -377,7 +377,7 @@
       "source-layer": "railway",
       "filter": ["any", ["!has", "ftCode"], ["!=", "ftCode", 8201]],
       "paint": {
-        "line-color": "#888888",
+        "line-color": "#495057",
         "line-opacity": [
           "case",
           ["any", ["==", ["get", "ftCode"], 2804]],
@@ -394,8 +394,8 @@
       "source-layer": "building",
       "minzoom": 15,
       "paint": {
-        "fill-color": "rgba(255, 238, 187, 1)",
-        "fill-outline-color": "rgba(238, 221, 153, 1)"
+        "fill-color": "#f1f3f5",
+        "fill-outline-color": "#ced4da"
       }
     },
     {
@@ -409,8 +409,8 @@
           "match",
           ["get", "railState"],
           [2, 3],
-          "#ffeeee",
-          "#ffaacc"
+          "#ff8787",
+          "#c92a2a"
         ],
         "line-width": 5
       }
@@ -473,17 +473,17 @@
       "paint": {
         "text-halo-color": "#ffffff",
         "text-halo-width": 2,
-        "icon-color": "#000000",
+        "icon-color": "#212529",
         "text-color": [
           "match",
           ["get", "annoCtg"],
           422,
-          "#449944",
+          "#2f9e44",
           [321, 322, 323, 343, 344, 345, 347, 348],
-          "#7777DD",
+          "#4263eb",
           [311, 312, 313, 314, 315, 316, 333],
-          "#774444",
-          "#000000"
+          "#664d3c",
+          "#212529"
         ]
       }
     },
@@ -512,8 +512,8 @@
           "match",
           ["get", "annoCtg"],
           [411, 421],
-          "#449944",
-          "#000000"
+          "#2f9e44",
+          "#212529"
         ]
       }
     },
