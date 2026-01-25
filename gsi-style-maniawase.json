@@ -104,6 +104,13 @@
       "paint": {"line-color": "#364fc7", "line-width": 1}
     },
     {
+      "id": "lake",
+      "type": "line",
+      "source": "gsibv-vectortile-source-1-4-16",
+      "source-layer": "lake",
+      "paint": {"line-color": "#a5d8ff"}
+    },
+    {
       "id": "river",
       "type": "line",
       "source": "gsibv-vectortile-source-1-4-16",
