@@ -586,6 +586,38 @@
       }
     },
     {
+      "id": "symbol-triangulation-benchmark",
+      "type": "symbol",
+      "source": "gsibv-vectortile-source-1-4-16",
+      "source-layer": "symbol",
+      "minzoom": 16.25,
+      "filter": ["in", "ftCode", 7101, 7102, 7103],
+      "layout": {
+        "text-field": [ "to-string", [ "case", [ "!", [ "has", "alti" ] ], [ "to-string", "" ], [ "==", [ "get", "alti" ], "" ], [ "to-string", "" ], [ "in", ".", [ "to-string", [ "/", [ "round", [ "*", [ "to-number", [ "get", "alti" ] ], 10 ] ], 10 ] ] ], [ "to-string", [ "/", [ "round", [ "*", [ "to-number", [ "get", "alti" ] ], 10 ] ], 10 ] ], [ "concat", [ "to-string", [ "/", [ "round", [ "*", [ "to-number", [ "get", "alti" ] ], 10 ] ], 10 ] ], ".0" ] ] ],
+        "text-size": 10,
+        "text-font": ["NotoSansCJKjp-Regular"],
+        "text-anchor": "left",
+        "text-offset": [0.8, -0.1],
+        "icon-size": 0.75,
+        "icon-image": [
+            "match",
+            ["get", "ftCode"],
+            7101,
+            "電子基準点-20",
+            7102,
+            "標高点（測点）-20",
+            7103,
+            "水準点",
+            ""
+        ],
+        "icon-pitch-alignment": "viewport",
+        "icon-rotation-alignment": "viewport",
+        "symbol-placement": "point",
+        "icon-allow-overlap": true,
+        "symbol-z-order": "auto"
+      }
+    },
+    {
       "id": "label",
       "type": "symbol",
       "source": "gsibv-vectortile-source-1-4-16",
