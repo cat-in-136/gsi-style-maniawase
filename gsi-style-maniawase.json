@@ -594,7 +594,7 @@
       "layout": {
         "text-field": "{knj}",
         "text-font": ["NotoSansCJKjp-Regular"],
-        "text-size": ["match", ["get", "annoCtg"], [422], 14, 10],
+        "text-size": ["match", ["get", "annoCtg"], [412, 422], 14, 10],
         "symbol-sort-key": ["case", ["==", ["get", "annoCtg"], 422], 1, 10]
       },
       "paint": {
@@ -604,7 +604,7 @@
         "text-color": [
           "match",
           ["get", "annoCtg"],
-          422,
+          [412, 422],
           "#2f9e44",
           [321, 322, 323, 343, 344, 345, 347, 348],
           "#4263eb",
