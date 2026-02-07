@@ -1,0 +1,23 @@
+{
+  "name": "gsi-style-maniawase",
+  "version": "1.0.0",
+  "description": "Vector tile style for GSI data, rendered with Open Color palette for a modern and lightweight look.",
+  "main": "dist/build.js",
+  "scripts": {
+    "build": "tsc && node dist/build.js",
+    "test": "echo \"No tests\" && exit 0"
+  },
+  "keywords": [
+    "maplibre",
+    "open-color",
+    "vector-tile"
+  ],
+  "author": "",
+  "license": "CC-BY",
+  "devDependencies": {
+    "@types/node": "^25.2.1",
+    "maplibre-gl": "^5.17.0",
+    "opencolor": "^0.2.0",
+    "typescript": "^5.9.3"
+  }
+}
