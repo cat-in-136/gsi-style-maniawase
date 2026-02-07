@@ -1,5 +1,36 @@
 import type { StyleSpecification } from 'maplibre-gl';
 
+const color_20c997: string = "#20c997";
+const color_212529: string = "#212529";
+const color_2f9e44: string = "#2f9e44";
+const color_343a40: string = "#343a40";
+const color_364fc7: string = "#364fc7";
+const color_4263eb: string = "#4263eb";
+const color_495057: string = "#495057";
+const color_664d3c: string = "#664d3c";
+const color_a5d8ff: string = "#a5d8ff";
+const color_adb5bd: string = "#adb5bd";
+const color_b2f2bb: string = "#b2f2bb";
+const color_ba9f89: string = "#ba9f89";
+const color_bbbbd7: string = "#bbbbd7";
+const color_be4bdb: string = "#be4bdb";
+const color_c92a2a: string = "#c92a2a";
+const color_ced4da: string = "#ced4da";
+const color_d0ebff: string = "#d0ebff";
+const color_d9c8b6: string = "#d9c8b6";
+const color_dee2e6: string = "#dee2e6";
+const color_ebfbee: string = "#ebfbee";
+const color_edf2ff: string = "#edf2ff";
+const color_f1f3f5: string = "#f1f3f5";
+const color_f8f9fa: string = "#f8f9fa";
+const color_fcc419: string = "#fcc419";
+const color_ff8787: string = "#ff8787";
+const color_ff922b: string = "#ff922b";
+const color_ffd8a8: string = "#ffd8a8";
+const color_ffec99: string = "#ffec99";
+const color_fff9db: string = "#fff9db";
+const color_ffffff: string = "#ffffff";
+
 const style: StyleSpecification = {
   "version": 8,
   "name": "gsi-style-maniawase",
@@ -21,7 +52,7 @@ const style: StyleSpecification = {
       "type": "fill",
       "source": "gsibv-vectortile-source-1-4-16",
       "source-layer": "waterarea",
-      "paint": { "fill-color": "#d0ebff" }
+      "paint": { "fill-color": color_d0ebff }
     },
     {
       "id": "landforma",
@@ -32,10 +63,10 @@ const style: StyleSpecification = {
         "fill-color": [
           "match",
           ["get", "ftCode"],
-          7401, "#ebfbee",
-          7402, "#edf2ff",
-          7403, "#fff9db",
-          "#f8f9fa"
+          7401, color_ebfbee,
+          7402, color_edf2ff,
+          7403, color_fff9db,
+          color_f8f9fa
         ]
       }
     },
@@ -46,7 +77,7 @@ const style: StyleSpecification = {
       "source-layer": "contour",
       "minzoom": 11,
       "paint": {
-        "line-color": ["match", ["get", "altiFlag"], 0, "#ba9f89", "#d9c8b6"],
+        "line-color": ["match", ["get", "altiFlag"], 0, color_ba9f89, color_d9c8b6],
         "line-width": ["match", ["get", "altiFlag"], 0, 1.4, 0.7],
         "line-opacity": [
           "interpolate", ["linear"], ["zoom"],
@@ -83,13 +114,13 @@ const style: StyleSpecification = {
         "text-keep-upright": true
       },
       "paint": {
-        "text-color": ["match", ["get", "altiFlag"], 0, "#ba9f89", "#d9c8b6"],
+        "text-color": ["match", ["get", "altiFlag"], 0, color_ba9f89, color_d9c8b6],
         "text-opacity": [
           "interpolate", ["linear"], ["zoom"],
           14, 0.25,
           16.5, 1
         ],
-        "text-halo-color": "#ffffff",
+        "text-halo-color": color_ffffff,
         "text-halo-width": 2
       }
     },
@@ -99,35 +130,35 @@ const style: StyleSpecification = {
       "source": "gsibv-vectortile-source-1-4-16",
       "source-layer": "structurel",
       "filter": ["all", ["in", "ftCode", 5501, 5511, 5514, 5515, 5532, 5501]],
-      "paint": { "fill-color": "#adb5bd" }
+      "paint": { "fill-color": color_adb5bd }
     },
     {
       "id": "wstructurea",
       "type": "fill",
       "source": "gsibv-vectortile-source-1-4-16",
       "source-layer": "wstructurea",
-      "paint": { "fill-color": "#ffffff" }
+      "paint": { "fill-color": color_ffffff }
     },
     {
       "id": "coastline",
       "type": "line",
       "source": "gsibv-vectortile-source-1-4-16",
       "source-layer": "coastline",
-      "paint": { "line-color": "#364fc7", "line-width": 1 }
+      "paint": { "line-color": color_364fc7, "line-width": 1 }
     },
     {
       "id": "lake",
       "type": "line",
       "source": "gsibv-vectortile-source-1-4-16",
       "source-layer": "lake",
-      "paint": { "line-color": "#a5d8ff" }
+      "paint": { "line-color": color_a5d8ff }
     },
     {
       "id": "river",
       "type": "line",
       "source": "gsibv-vectortile-source-1-4-16",
       "source-layer": "river",
-      "paint": { "line-color": "#a5d8ff" }
+      "paint": { "line-color": color_a5d8ff }
     },
     {
       "id": "boundary",
@@ -136,7 +167,7 @@ const style: StyleSpecification = {
       "source-layer": "boundary",
       "filter": ["any", ["!in", "ftCode", 1211, 1212, 51211, 51212]],
       "paint": {
-        "line-color": "#dee2e6",
+        "line-color": color_dee2e6,
         "line-width": 1
       }
     },
@@ -147,7 +178,7 @@ const style: StyleSpecification = {
       "source-layer": "boundary",
       "filter": ["any", ["in", "ftCode", 1211, 1212, 51211, 51212]],
       "paint": {
-        "line-color": "#be4bdb",
+        "line-color": color_be4bdb,
         "line-width": ["match", ["get", "ftCode"], 1211, 3, 1212, 2, 1],
         "line-dasharray": [7, 2, 1, 2]
       }
@@ -158,7 +189,7 @@ const style: StyleSpecification = {
       "source": "gsibv-vectortile-source-1-4-16",
       "source-layer": "searoute",
       "paint": {
-        "line-color": "#bbbbd7",
+        "line-color": color_bbbbd7,
         "line-dasharray": [10, 10],
         "line-width": 1
       }
@@ -183,14 +214,14 @@ const style: StyleSpecification = {
         "line-color": [
           "case",
           ["==", ["get", "motorway"], 1],
-          "#20c997",
+          color_20c997,
           [
             "match",
             ["get", "rdCtg"],
-            0, "#ff922b",
-            1, "#fcc419",
-            3, "#20c997",
-            "#dee2e6"
+            0, color_ff922b,
+            1, color_fcc419,
+            3, color_20c997,
+            color_dee2e6
           ]
         ],
         "line-width": [
@@ -213,7 +244,7 @@ const style: StyleSpecification = {
         ["all", [">=", "ftCode", 2200], ["<=", "ftCode", 2209]],
         ["all", [">=", "ftCode", 2230], ["<=", "ftCode", 2299]]
       ],
-      "paint": { "line-color": "#ced4da", "line-width": 2 }
+      "paint": { "line-color": color_ced4da, "line-width": 2 }
     },
     {
       "id": "road-boundary-dash-z16",
@@ -223,7 +254,7 @@ const style: StyleSpecification = {
       "minzoom": 16,
       "filter": ["all", [">=", "ftCode", 2220], ["<=", "ftCode", 2229]],
       "paint": {
-        "line-color": "#ced4da",
+        "line-color": color_ced4da,
         "line-width": 2,
         "line-dasharray": [1, 1]
       }
@@ -237,8 +268,8 @@ const style: StyleSpecification = {
       "paint": {
         "line-color": [
           "interpolate", ["linear"], ["zoom"],
-          15, "#dee2e6",
-          16, "#664d3c"
+          15, color_dee2e6,
+          16, color_664d3c
         ],
         "line-width": [
           "interpolate", ["linear"], ["zoom"],
@@ -274,14 +305,14 @@ const style: StyleSpecification = {
         "line-color": [
           "case",
           ["==", ["get", "motorway"], 1],
-          "#20c997",
+          color_20c997,
           [
             "match",
             ["get", "rdCtg"],
-            0, "#ff922b",
-            1, "#fcc419",
-            3, "#20c997",
-            "#adb5bd"
+            0, color_ff922b,
+            1, color_fcc419,
+            3, color_20c997,
+            color_adb5bd
           ]
         ],
         "line-opacity": ["match", ["get", "ftCode"], [2704, 2714], 0.5, 1],
@@ -329,14 +360,14 @@ const style: StyleSpecification = {
         "line-color": [
           "case",
           ["==", ["get", "motorway"], 1],
-          "#b2f2bb",
+          color_b2f2bb,
           [
             "match",
             ["get", "rdCtg"],
-            0, "#ffd8a8",
-            1, "#ffec99",
-            3, "#b2f2bb",
-            "#ffffff"
+            0, color_ffd8a8,
+            1, color_ffec99,
+            3, color_b2f2bb,
+            color_ffffff
           ]
         ],
         "line-width": [
@@ -369,8 +400,8 @@ const style: StyleSpecification = {
           "match",
           ["floor", ["/", ["to-number", ["get", "rtCode"]], 1000000]],
           [40201, 40216],
-          "#343a40",
-          "#495057"
+          color_343a40,
+          color_495057
         ],
         "line-width": [
           "interpolate", ["linear"], ["zoom"],
@@ -387,7 +418,7 @@ const style: StyleSpecification = {
       "source-layer": "railway",
       "filter": ["any", ["!has", "ftCode"], ["!=", "ftCode", 8201]],
       "paint": {
-        "line-color": "#495057",
+        "line-color": color_495057,
         "line-opacity": [
           "case",
           ["any", ["==", ["get", "ftCode"], 2804]],
@@ -404,8 +435,8 @@ const style: StyleSpecification = {
       "source-layer": "building",
       "minzoom": 15,
       "paint": {
-        "fill-color": "#f1f3f5",
-        "fill-outline-color": "#ced4da"
+        "fill-color": color_f1f3f5,
+        "fill-outline-color": color_ced4da
       }
     },
     {
@@ -418,8 +449,8 @@ const style: StyleSpecification = {
         "line-color": [
           "match",
           ["get", "railState"],
-          [2, 3], "#ff8787",
-          "#c92a2a"
+          [2, 3], color_ff8787,
+          color_c92a2a
         ],
         "line-width": 5
       }
@@ -460,7 +491,7 @@ const style: StyleSpecification = {
         "text-max-width": 100,
         "visibility": "visible"
       },
-      "paint": { "text-color": "#ffffff" }
+      "paint": { "text-color": color_ffffff }
     },
     {
       "id": "symbol-icon",
@@ -579,16 +610,16 @@ const style: StyleSpecification = {
         "symbol-sort-key": ["case", ["==", ["get", "annoCtg"], 422], 1, 10]
       },
       "paint": {
-        "text-halo-color": "#ffffff",
+        "text-halo-color": color_ffffff,
         "text-halo-width": 2,
-        "icon-color": "#212529",
+        "icon-color": color_212529,
         "text-color": [
           "match",
           ["get", "annoCtg"],
-          [412, 422], "#2f9e44",
-          [321, 322, 323, 343, 344, 345, 347, 348], "#4263eb",
-          [311, 312, 313, 314, 315, 316, 333], "#664d3c",
-          "#212529"
+          [412, 422], color_2f9e44,
+          [321, 322, 323, 343, 344, 345, 347, 348], color_4263eb,
+          [311, 312, 313, 314, 315, 316, 333], color_664d3c,
+          color_212529
         ]
       }
     },
@@ -619,13 +650,13 @@ const style: StyleSpecification = {
         "icon-rotation-alignment": "auto"
       },
       "paint": {
-        "text-halo-color": "#ffffff",
+        "text-halo-color": color_ffffff,
         "text-halo-width": 2,
         "text-color": [
           "match",
           ["get", "annoCtg"],
-          [411, 421], "#2f9e44",
-          "#212529"
+          [411, 421], color_2f9e44,
+          color_212529
         ]
       }
     },
@@ -649,7 +680,7 @@ const style: StyleSpecification = {
         "text-allow-overlap": true,
         "text-rotate": 0
       },
-      "paint": { "text-halo-color": "#ffffff", "text-halo-width": 2 }
+      "paint": { "text-halo-color": color_ffffff, "text-halo-width": 2 }
     }
   ],
 };
