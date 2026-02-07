@@ -1,35 +1,52 @@
 import type { StyleSpecification } from 'maplibre-gl';
 
-const color_20c997: string = "#20c997";
-const color_212529: string = "#212529";
-const color_2f9e44: string = "#2f9e44";
-const color_343a40: string = "#343a40";
-const color_364fc7: string = "#364fc7";
-const color_4263eb: string = "#4263eb";
-const color_495057: string = "#495057";
-const color_664d3c: string = "#664d3c";
-const color_a5d8ff: string = "#a5d8ff";
-const color_adb5bd: string = "#adb5bd";
-const color_b2f2bb: string = "#b2f2bb";
-const color_ba9f89: string = "#ba9f89";
-const color_bbbbd7: string = "#bbbbd7";
-const color_be4bdb: string = "#be4bdb";
-const color_c92a2a: string = "#c92a2a";
-const color_ced4da: string = "#ced4da";
-const color_d0ebff: string = "#d0ebff";
-const color_d9c8b6: string = "#d9c8b6";
-const color_dee2e6: string = "#dee2e6";
-const color_ebfbee: string = "#ebfbee";
-const color_edf2ff: string = "#edf2ff";
-const color_f1f3f5: string = "#f1f3f5";
-const color_f8f9fa: string = "#f8f9fa";
-const color_fcc419: string = "#fcc419";
-const color_ff8787: string = "#ff8787";
-const color_ff922b: string = "#ff922b";
-const color_ffd8a8: string = "#ffd8a8";
-const color_ffec99: string = "#ffec99";
-const color_fff9db: string = "#fff9db";
-const color_ffffff: string = "#ffffff";
+const colors = {
+  // Water
+  water: "#d0ebff",
+  lakeRiverLine: "#a5d8ff",
+  coastline: "#364fc7",
+  seaRoute: "#bbbbd7",
+
+  // Landforma (Terrain/Land Cover)
+  landformaGreen: "#ebfbee",
+  landformaBlue: "#edf2ff",
+  landformaYellow: "#fff9db",
+  landformaDefault: "#f8f9fa",
+
+  // Contour Lines
+  contourMain: "#ba9f89",
+  contourThin: "#d9c8b6",
+
+  // Structure (General)
+  structurel: "#adb5bd",
+  buildingFill: "#f1f3f5",
+  buildingOutline: "#ced4da",
+
+  // Roads
+  roadExpressway: "#20c997",
+  roadNational: "#ff922b",
+  roadPrefectural: "#fcc419",
+  roadFillExpressway: "#b2f2bb",
+  roadFillNational: "#ffd8a8",
+  roadFillPrefectural: "#ffec99",
+  footway: "#664d3c",
+
+  // Railways
+  railway: "#343a40",
+  railwaySecondary: "#495057",
+  station: "#c92a2a",
+  stationRailState: "#ff8787",
+
+  // Boundaries
+  boundaryCountry: "#be4bdb",
+  boundaryDefault: "#dee2e6",
+
+  // Labels (Text, Icons)
+  labelDefault: "#212529",
+  greenLabel: "#2f9e44",
+  blueLabel: "#4263eb",
+  white: "#ffffff", // General white for halos, etc.
+};
 
 const style: StyleSpecification = {
   "version": 8,
@@ -52,7 +69,7 @@ const style: StyleSpecification = {
       "type": "fill",
       "source": "gsibv-vectortile-source-1-4-16",
       "source-layer": "waterarea",
-      "paint": { "fill-color": color_d0ebff }
+      "paint": { "fill-color": colors.water }
     },
     {
       "id": "landforma",
@@ -63,10 +80,10 @@ const style: StyleSpecification = {
         "fill-color": [
           "match",
           ["get", "ftCode"],
-          7401, color_ebfbee,
-          7402, color_edf2ff,
-          7403, color_fff9db,
-          color_f8f9fa
+          7401, colors.landformaGreen,
+          7402, colors.landformaBlue,
+          7403, colors.landformaYellow,
+          colors.landformaDefault
         ]
       }
     },
@@ -77,7 +94,7 @@ const style: StyleSpecification = {
       "source-layer": "contour",
       "minzoom": 11,
       "paint": {
-        "line-color": ["match", ["get", "altiFlag"], 0, color_ba9f89, color_d9c8b6],
+        "line-color": ["match", ["get", "altiFlag"], 0, colors.contourMain, colors.contourThin],
         "line-width": ["match", ["get", "altiFlag"], 0, 1.4, 0.7],
         "line-opacity": [
           "interpolate", ["linear"], ["zoom"],
@@ -114,13 +131,13 @@ const style: StyleSpecification = {
         "text-keep-upright": true
       },
       "paint": {
-        "text-color": ["match", ["get", "altiFlag"], 0, color_ba9f89, color_d9c8b6],
+        "text-color": ["match", ["get", "altiFlag"], 0, colors.contourMain, colors.contourThin],
         "text-opacity": [
           "interpolate", ["linear"], ["zoom"],
           14, 0.25,
           16.5, 1
         ],
-        "text-halo-color": color_ffffff,
+        "text-halo-color": colors.white,
         "text-halo-width": 2
       }
     },
@@ -130,35 +147,35 @@ const style: StyleSpecification = {
       "source": "gsibv-vectortile-source-1-4-16",
       "source-layer": "structurel",
       "filter": ["all", ["in", "ftCode", 5501, 5511, 5514, 5515, 5532, 5501]],
-      "paint": { "fill-color": color_adb5bd }
+      "paint": { "fill-color": colors.structurel }
     },
     {
       "id": "wstructurea",
       "type": "fill",
       "source": "gsibv-vectortile-source-1-4-16",
       "source-layer": "wstructurea",
-      "paint": { "fill-color": color_ffffff }
+      "paint": { "fill-color": colors.white }
     },
     {
       "id": "coastline",
       "type": "line",
       "source": "gsibv-vectortile-source-1-4-16",
       "source-layer": "coastline",
-      "paint": { "line-color": color_364fc7, "line-width": 1 }
+      "paint": { "line-color": colors.coastline, "line-width": 1 }
     },
     {
       "id": "lake",
       "type": "line",
       "source": "gsibv-vectortile-source-1-4-16",
       "source-layer": "lake",
-      "paint": { "line-color": color_a5d8ff }
+      "paint": { "line-color": colors.lakeRiverLine }
     },
     {
       "id": "river",
       "type": "line",
       "source": "gsibv-vectortile-source-1-4-16",
       "source-layer": "river",
-      "paint": { "line-color": color_a5d8ff }
+      "paint": { "line-color": colors.lakeRiverLine }
     },
     {
       "id": "boundary",
@@ -167,7 +184,7 @@ const style: StyleSpecification = {
       "source-layer": "boundary",
       "filter": ["any", ["!in", "ftCode", 1211, 1212, 51211, 51212]],
       "paint": {
-        "line-color": color_dee2e6,
+        "line-color": colors.boundaryDefault,
         "line-width": 1
       }
     },
@@ -178,7 +195,7 @@ const style: StyleSpecification = {
       "source-layer": "boundary",
       "filter": ["any", ["in", "ftCode", 1211, 1212, 51211, 51212]],
       "paint": {
-        "line-color": color_be4bdb,
+        "line-color": colors.boundaryCountry,
         "line-width": ["match", ["get", "ftCode"], 1211, 3, 1212, 2, 1],
         "line-dasharray": [7, 2, 1, 2]
       }
@@ -189,7 +206,7 @@ const style: StyleSpecification = {
       "source": "gsibv-vectortile-source-1-4-16",
       "source-layer": "searoute",
       "paint": {
-        "line-color": color_bbbbd7,
+        "line-color": colors.seaRoute,
         "line-dasharray": [10, 10],
         "line-width": 1
       }
@@ -214,14 +231,14 @@ const style: StyleSpecification = {
         "line-color": [
           "case",
           ["==", ["get", "motorway"], 1],
-          color_20c997,
+          colors.roadExpressway,
           [
             "match",
             ["get", "rdCtg"],
-            0, color_ff922b,
-            1, color_fcc419,
-            3, color_20c997,
-            color_dee2e6
+            0, colors.roadNational,
+            1, colors.roadPrefectural,
+            3, colors.roadExpressway,
+            colors.boundaryDefault
           ]
         ],
         "line-width": [
@@ -244,7 +261,7 @@ const style: StyleSpecification = {
         ["all", [">=", "ftCode", 2200], ["<=", "ftCode", 2209]],
         ["all", [">=", "ftCode", 2230], ["<=", "ftCode", 2299]]
       ],
-      "paint": { "line-color": color_ced4da, "line-width": 2 }
+      "paint": { "line-color": colors.buildingOutline, "line-width": 2 }
     },
     {
       "id": "road-boundary-dash-z16",
@@ -254,7 +271,7 @@ const style: StyleSpecification = {
       "minzoom": 16,
       "filter": ["all", [">=", "ftCode", 2220], ["<=", "ftCode", 2229]],
       "paint": {
-        "line-color": color_ced4da,
+        "line-color": colors.buildingOutline,
         "line-width": 2,
         "line-dasharray": [1, 1]
       }
@@ -268,8 +285,8 @@ const style: StyleSpecification = {
       "paint": {
         "line-color": [
           "interpolate", ["linear"], ["zoom"],
-          15, color_dee2e6,
-          16, color_664d3c
+          15, colors.boundaryDefault,
+          16, colors.footway
         ],
         "line-width": [
           "interpolate", ["linear"], ["zoom"],
@@ -305,14 +322,14 @@ const style: StyleSpecification = {
         "line-color": [
           "case",
           ["==", ["get", "motorway"], 1],
-          color_20c997,
+          colors.roadExpressway,
           [
             "match",
             ["get", "rdCtg"],
-            0, color_ff922b,
-            1, color_fcc419,
-            3, color_20c997,
-            color_adb5bd
+            0, colors.roadNational,
+            1, colors.roadPrefectural,
+            3, colors.roadExpressway,
+            colors.structurel
           ]
         ],
         "line-opacity": ["match", ["get", "ftCode"], [2704, 2714], 0.5, 1],
@@ -360,14 +377,14 @@ const style: StyleSpecification = {
         "line-color": [
           "case",
           ["==", ["get", "motorway"], 1],
-          color_b2f2bb,
+          colors.roadFillExpressway,
           [
             "match",
             ["get", "rdCtg"],
-            0, color_ffd8a8,
-            1, color_ffec99,
-            3, color_b2f2bb,
-            color_ffffff
+            0, colors.roadFillNational,
+            1, colors.roadFillPrefectural,
+            3, colors.roadFillExpressway,
+            colors.white
           ]
         ],
         "line-width": [
@@ -400,8 +417,8 @@ const style: StyleSpecification = {
           "match",
           ["floor", ["/", ["to-number", ["get", "rtCode"]], 1000000]],
           [40201, 40216],
-          color_343a40,
-          color_495057
+          colors.railway,
+          colors.railwaySecondary
         ],
         "line-width": [
           "interpolate", ["linear"], ["zoom"],
@@ -418,7 +435,7 @@ const style: StyleSpecification = {
       "source-layer": "railway",
       "filter": ["any", ["!has", "ftCode"], ["!=", "ftCode", 8201]],
       "paint": {
-        "line-color": color_495057,
+        "line-color": colors.railwaySecondary,
         "line-opacity": [
           "case",
           ["any", ["==", ["get", "ftCode"], 2804]],
@@ -435,8 +452,8 @@ const style: StyleSpecification = {
       "source-layer": "building",
       "minzoom": 15,
       "paint": {
-        "fill-color": color_f1f3f5,
-        "fill-outline-color": color_ced4da
+        "fill-color": colors.buildingFill,
+        "fill-outline-color": colors.buildingOutline
       }
     },
     {
@@ -449,8 +466,8 @@ const style: StyleSpecification = {
         "line-color": [
           "match",
           ["get", "railState"],
-          [2, 3], color_ff8787,
-          color_c92a2a
+          [2, 3], colors.stationRailState,
+          colors.station
         ],
         "line-width": 5
       }
@@ -491,7 +508,7 @@ const style: StyleSpecification = {
         "text-max-width": 100,
         "visibility": "visible"
       },
-      "paint": { "text-color": color_ffffff }
+      "paint": { "text-color": colors.white }
     },
     {
       "id": "symbol-icon",
@@ -610,16 +627,16 @@ const style: StyleSpecification = {
         "symbol-sort-key": ["case", ["==", ["get", "annoCtg"], 422], 1, 10]
       },
       "paint": {
-        "text-halo-color": color_ffffff,
+        "text-halo-color": colors.white,
         "text-halo-width": 2,
-        "icon-color": color_212529,
+        "icon-color": colors.labelDefault,
         "text-color": [
           "match",
           ["get", "annoCtg"],
-          [412, 422], color_2f9e44,
-          [321, 322, 323, 343, 344, 345, 347, 348], color_4263eb,
-          [311, 312, 313, 314, 315, 316, 333], color_664d3c,
-          color_212529
+          [412, 422], colors.greenLabel,
+          [321, 322, 323, 343, 344, 345, 347, 348], colors.blueLabel,
+          [311, 312, 313, 314, 315, 316, 333], colors.footway,
+          colors.labelDefault
         ]
       }
     },
@@ -650,13 +667,13 @@ const style: StyleSpecification = {
         "icon-rotation-alignment": "auto"
       },
       "paint": {
-        "text-halo-color": color_ffffff,
+        "text-halo-color": colors.white,
         "text-halo-width": 2,
         "text-color": [
           "match",
           ["get", "annoCtg"],
-          [411, 421], color_2f9e44,
-          color_212529
+          [411, 421], colors.greenLabel,
+          colors.labelDefault
         ]
       }
     },
@@ -680,7 +697,7 @@ const style: StyleSpecification = {
         "text-allow-overlap": true,
         "text-rotate": 0
       },
-      "paint": { "text-halo-color": color_ffffff, "text-halo-width": 2 }
+      "paint": { "text-halo-color": colors.white, "text-halo-width": 2 }
     }
   ],
 };
