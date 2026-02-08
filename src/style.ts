@@ -1,7 +1,7 @@
 import type { StyleSpecification } from 'maplibre-gl';
-import type { Colors } from './colors';
+import type { ThemeColors } from './colors';
 
-export function createStyle(colors: Colors): StyleSpecification {
+export function createStyle(colors: ThemeColors): StyleSpecification {
   return {
   "version": 8,
   "name": "gsi-style-maniawase",
