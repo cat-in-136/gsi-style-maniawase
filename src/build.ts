@@ -1,7 +1,10 @@
 import fs from 'fs';
 import path from 'path';
 
-import styleJson from './style';
+import { colors } from './colors';
+import { createStyle } from './style';
+
+const styleJson = createStyle(colors);
 
 const outputJsonPath = path.join(__dirname, 'dist', 'gsi-style-maniawase.json');
 
