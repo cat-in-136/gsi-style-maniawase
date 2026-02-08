@@ -20,6 +20,7 @@ export type ThemeColors = {
 
   // Structure (General)
   structurel: string;
+  wstructurea: string;
   buildingFill: string;
   buildingOutline: string;
 
@@ -30,7 +31,9 @@ export type ThemeColors = {
   roadFillExpressway: string;
   roadFillNational: string;
   roadFillPrefectural: string;
+  roadFillDefault: string;
   footway: string;
+  roadNoLabel: string;
 
   // Railways
   railway: string;
@@ -46,7 +49,7 @@ export type ThemeColors = {
   labelDefault: string;
   greenLabel: string;
   blueLabel: string;
-  white: string;
+  halo: string;
 };
 
 export const colors: Record<string, ThemeColors> = {
@@ -69,6 +72,7 @@ export const colors: Record<string, ThemeColors> = {
 
     // Structure (General)
     structurel: oc.gray[5],
+    wstructurea: oc.white,
     buildingFill: oc.gray[1],
     buildingOutline: oc.gray[4],
 
@@ -79,7 +83,9 @@ export const colors: Record<string, ThemeColors> = {
     roadFillExpressway: oc.green[2],
     roadFillNational: oc.orange[2],
     roadFillPrefectural: oc.yellow[2],
+    roadFillDefault: oc.white,
     footway: ocx.brown[7],
+    roadNoLabel: oc.white,
 
     // Railways
     railway: oc.gray[8],
@@ -95,7 +101,7 @@ export const colors: Record<string, ThemeColors> = {
     labelDefault: oc.gray[9],
     greenLabel: oc.green[8],
     blueLabel: oc.indigo[7],
-    white: oc.white,
+    halo: oc.white,
   },
   dark: {
     // Water
@@ -116,6 +122,7 @@ export const colors: Record<string, ThemeColors> = {
 
     // Structure (General)
     structurel: oc.gray[5],
+    wstructurea: oc.gray[9],
     buildingFill: oc.gray[8],
     buildingOutline: oc.gray[6],
 
@@ -126,7 +133,9 @@ export const colors: Record<string, ThemeColors> = {
     roadFillExpressway: oc.green[8],
     roadFillNational: oc.orange[8],
     roadFillPrefectural: oc.yellow[8],
+    roadFillDefault: oc.gray[9],
     footway: ocx.brown[4],
+    roadNoLabel: oc.white,
 
     // Railways
     railway: oc.gray[3],
@@ -142,7 +151,7 @@ export const colors: Record<string, ThemeColors> = {
     labelDefault: oc.gray[1],
     greenLabel: oc.green[4],
     blueLabel: oc.indigo[4],
-    white: oc.gray[9],
+    halo: oc.black,
   },
 };
 

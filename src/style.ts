@@ -91,7 +91,7 @@ export function createStyle(colors: ThemeColors): StyleSpecification {
           14, 0.25,
           16.5, 1
         ],
-        "text-halo-color": colors.white,
+        "text-halo-color": colors.halo,
         "text-halo-width": 2
       }
     },
@@ -108,7 +108,7 @@ export function createStyle(colors: ThemeColors): StyleSpecification {
       "type": "fill",
       "source": "gsibv-vectortile-source-1-4-16",
       "source-layer": "wstructurea",
-      "paint": { "fill-color": colors.white }
+      "paint": { "fill-color": colors.wstructurea }
     },
     {
       "id": "coastline",
@@ -338,7 +338,7 @@ export function createStyle(colors: ThemeColors): StyleSpecification {
             0, colors.roadFillNational,
             1, colors.roadFillPrefectural,
             3, colors.roadFillExpressway,
-            colors.white
+            colors.roadFillDefault
           ]
         ],
         "line-width": [
@@ -462,7 +462,7 @@ export function createStyle(colors: ThemeColors): StyleSpecification {
         "text-max-width": 100,
         "visibility": "visible"
       },
-      "paint": { "text-color": colors.white }
+      "paint": { "text-color": colors.roadNoLabel }
     },
     {
       "id": "symbol-icon",
@@ -581,7 +581,7 @@ export function createStyle(colors: ThemeColors): StyleSpecification {
         "symbol-sort-key": ["case", ["==", ["get", "annoCtg"], 422], 1, 10]
       },
       "paint": {
-        "text-halo-color": colors.white,
+        "text-halo-color": colors.halo,
         "text-halo-width": 2,
         "icon-color": colors.labelDefault,
         "text-color": [
@@ -621,7 +621,7 @@ export function createStyle(colors: ThemeColors): StyleSpecification {
         "icon-rotation-alignment": "auto"
       },
       "paint": {
-        "text-halo-color": colors.white,
+        "text-halo-color": colors.halo,
         "text-halo-width": 2,
         "text-color": [
           "match",
@@ -651,7 +651,11 @@ export function createStyle(colors: ThemeColors): StyleSpecification {
         "text-allow-overlap": true,
         "text-rotate": 0
       },
-      "paint": { "text-halo-color": colors.white, "text-halo-width": 2 }
+      "paint": {
+        "text-halo-color": colors.halo,
+        "text-halo-width": 2,
+        "text-color": colors.labelDefault
+      }
     }
   ],
 };
