@@ -5,6 +5,8 @@
   "main": "src/build.js",
   "scripts": {
     "build": "tsx src/build.js",
+    "postbuild": "npm run validate",
+    "validate": "tsx src/validate.ts",
     "test": "echo \"No tests\" && exit 0"
   },
   "keywords": [
