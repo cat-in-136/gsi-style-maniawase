@@ -19,5 +19,8 @@
     "maplibre-gl": "^5.17.0",
     "opencolor": "^0.2.0",
     "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "open-color": "^1.9.1"
   }
 }

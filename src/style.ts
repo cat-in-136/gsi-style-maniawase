@@ -1,51 +1,53 @@
 import type { StyleSpecification } from 'maplibre-gl';
+import oc from 'open-color';
+import ocx from './opencolor-ex';
 
 const colors = {
   // Water
-  water: "#d0ebff",
-  lakeRiverLine: "#a5d8ff",
-  coastline: "#364fc7",
-  seaRoute: "#bbbbd7",
+  water: oc.blue[1],
+  lakeRiverLine: oc.blue[2],
+  coastline: oc.indigo[9],
+  seaRoute: "#bbbbd7", // やや青みがかったグレー。open-colorになし
 
   // Landforma (Terrain/Land Cover)
-  landformaGreen: "#ebfbee",
-  landformaBlue: "#edf2ff",
-  landformaYellow: "#fff9db",
-  landformaDefault: "#f8f9fa",
+  landformaGreen: oc.green[0],
+  landformaBlue: oc.indigo[0],
+  landformaYellow: oc.yellow[0],
+  landformaDefault: oc.gray[0],
 
   // Contour Lines
-  contourMain: "#ba9f89",
-  contourThin: "#d9c8b6",
+  contourMain: ocx.brown[4],
+  contourThin: ocx.brown[3],
 
   // Structure (General)
-  structurel: "#adb5bd",
-  buildingFill: "#f1f3f5",
-  buildingOutline: "#ced4da",
+  structurel: oc.gray[5],
+  buildingFill: oc.gray[1],
+  buildingOutline: oc.gray[4],
 
   // Roads
-  roadExpressway: "#20c997",
-  roadNational: "#ff922b",
-  roadPrefectural: "#fcc419",
-  roadFillExpressway: "#b2f2bb",
-  roadFillNational: "#ffd8a8",
-  roadFillPrefectural: "#ffec99",
-  footway: "#664d3c",
+  roadExpressway: oc.teal[5],
+  roadNational: oc.orange[5],
+  roadPrefectural: oc.yellow[5],
+  roadFillExpressway: oc.green[2],
+  roadFillNational: oc.orange[2],
+  roadFillPrefectural: oc.yellow[2],
+  footway: ocx.brown[7],
 
   // Railways
-  railway: "#343a40",
-  railwaySecondary: "#495057",
-  station: "#c92a2a",
-  stationRailState: "#ff8787",
+  railway: oc.gray[8],
+  railwaySecondary: oc.gray[7],
+  station: oc.red[9],
+  stationRailState: oc.red[4],
 
   // Boundaries
-  boundaryCountry: "#be4bdb",
-  boundaryDefault: "#dee2e6",
+  boundaryCountry: oc.grape[6],
+  boundaryDefault: oc.gray[3],
 
   // Labels (Text, Icons)
-  labelDefault: "#212529",
-  greenLabel: "#2f9e44",
-  blueLabel: "#4263eb",
-  white: "#ffffff", // General white for halos, etc.
+  labelDefault: oc.gray[9],
+  greenLabel: oc.green[8],
+  blueLabel: oc.indigo[7],
+  white: oc.white,
 };
 
 const style: StyleSpecification = {
