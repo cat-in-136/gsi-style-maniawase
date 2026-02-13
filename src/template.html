@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>GSI Style Maniawase Sample</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <script src="https://unpkg.com/maplibre-gl@3.x/dist/maplibre-gl.js"></script>
+    <link href="https://unpkg.com/maplibre-gl@3.x/dist/maplibre-gl.css" rel="stylesheet" />
+    <style>
+        body { margin: 0; padding: 0; }
+        #map-light, #map-dark { position: relative; width: 50%; height: 100vh; float: left; }
+    </style>
+</head>
+<body>
+    <div id="map-light"></div>
+    <div id="map-dark"></div>
+    <script>
+        // Placeholder for light style URL
+        const lightStyleUrl = 'gsi-style-maniawase.json';
+        // Placeholder for dark style URL
+        const darkStyleUrl = 'gsi-style-maniawase-dark.json';
+
+        const mapLight = new maplibregl.Map({
+            container: 'map-light',
+            style: lightStyleUrl,
+            center: [139.767, 35.681],
+            zoom: 13,
+            bearing: 0,
+            pitch: 0
+        });
+
+        const mapDark = new maplibregl.Map({
+            container: 'map-dark',
+            style: darkStyleUrl,
+            center: [139.767, 35.681],
+            zoom: 13,
+            bearing: 0,
+            pitch: 0
+        });
+
+        function syncMaps(map1, map2) {
+            let isMoving = false;
+
+            map1.on('moveend', () => {
+                if (isMoving) return;
+                isMoving = true;
+                map2.jumpTo({
+                    center: map1.getCenter(),
+                    zoom: map1.getZoom(),
+                    bearing: map1.getBearing(),
+                    pitch: map1.getPitch()
+                });
+                isMoving = false;
+            });
+
+            map2.on('moveend', () => {
+                if (isMoving) return;
+                isMoving = true;
+                map1.jumpTo({
+                    center: map2.getCenter(),
+                    zoom: map2.getZoom(),
+                    bearing: map2.getBearing(),
+                    pitch: map2.getPitch()
+                });
+                isMoving = false;
+            });
+        }
+
+        mapLight.on('load', () => {
+            mapDark.on('load', () => {
+                syncMaps(mapLight, mapDark);
+            });
+        });
+    </script>
+</body>
+</html>
