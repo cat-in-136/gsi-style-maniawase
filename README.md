@@ -1,6 +1,12 @@
 # gsi-style-maniawase
 
-国土地理院のベクトルタイル（実験用）を、Open Color ベースの配色でモダンかつ軽量にレンダリングするための地図スタイル定義です。
+国土地理院のベクトルタイル（実験用）を、Open Color ベースの配色でモダンかつ軽量にレンダリングするための MapLibre GL JS 向けの地図スタイル定義です。
+
+ビルド済みスタイル JSON は下記からアクセスできます。
+
+* ライトテーマ <https://cat-in-136.github.io/gsi-style-maniawase/gsi-style-maniawase.json>
+* ダークテーマ <https://cat-in-136.github.io/gsi-style-maniawase/gsi-style-maniawase-dark.json>
+
 
 ## 思想：間に合わせ (Maniawase)
 
@@ -38,20 +44,6 @@ npm run build
 * `oc-brown-4`: `#ba9f89`（計曲線）
 * `oc-brown-7`: `#664d3c`（自然地名・歩道）
 
-```css
-/* OpenColor Extension: Brown */
-  --oc-brown-0: #f8f6f2;
-  --oc-brown-1: #f2ede4;
-  --oc-brown-2: #e8ddd0;
-  --oc-brown-3: #d9c8b6;
-  --oc-brown-4: #ba9f89;
-  --oc-brown-5: #9c7f68;
-  --oc-brown-6: #826651;
-  --oc-brown-7: #664d3c;
-  --oc-brown-8: #4a3528;
-  --oc-brown-9: #2e1f16;
-```
-
 ### 主要レイヤーの配色（ライトテーマ）
 
 | カテゴリ | 色名 (Open Color) | コード | 適用対象 |
@@ -73,14 +65,14 @@ npm run build
 
 ## 導入方法
 
-MapLibre GL JS 等で `style` オプションに生成された JSON ファイルを指定してください。
+MapLibre GL JS 等で `style` オプションに JSON ファイルを指定してください。
 
 ### ライトテーマ
 
 ```javascript
 const map = new maplibregl.Map({
   container: 'map',
-  style: './dist/gsi-style-maniawase.json',
+  style: 'https://cat-in-136.github.io/gsi-style-maniawase/gsi-style-maniawase.json',
   center: [139.767, 35.681],
   zoom: 13
 });
@@ -91,7 +83,7 @@ const map = new maplibregl.Map({
 ```javascript
 const map = new maplibregl.Map({
   container: 'map',
-  style: './dist/gsi-style-maniawase-dark.json',
+  style: 'https://cat-in-136.github.io/gsi-style-maniawase/gsi-style-maniawase-dark.json',
   center: [139.767, 35.681],
   zoom: 13
 });
