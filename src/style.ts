@@ -21,6 +21,11 @@ export function createStyle(colors: ThemeColors): StyleSpecification {
   "glyphs": "https://maps.gsi.go.jp/xyz/noto-jp/{fontstack}/{range}.pbf",
   "layers": [
     {
+      "id": "background",
+      "type": "background",
+      "paint": { "background-color": colors.background }
+    },
+    {
       "id": "water",
       "type": "fill",
       "source": "gsibv-vectortile-source-1-4-16",

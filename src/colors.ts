@@ -2,6 +2,9 @@ import oc from 'open-color';
 import ocx from './opencolor-ex';
 
 export type ThemeColors = {
+  // Background
+  background: string;
+
   // Water
   water: string;
   lakeRiverLine: string;
@@ -54,6 +57,9 @@ export type ThemeColors = {
 
 export const colors: Record<string, ThemeColors> = {
   light: {
+    // Background
+    background: oc.white,
+
     // Water
     water: oc.blue[1],
     lakeRiverLine: oc.blue[2],
@@ -104,6 +110,9 @@ export const colors: Record<string, ThemeColors> = {
     halo: oc.white,
   },
   dark: {
+    // Background
+    background: oc.black,
+
     // Water
     water: oc.blue[9],
     lakeRiverLine: oc.blue[7],
