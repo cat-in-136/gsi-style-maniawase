@@ -8,17 +8,20 @@
     <link href="https://unpkg.com/maplibre-gl@3.x/dist/maplibre-gl.css" rel="stylesheet" />
     <style>
         body { margin: 0; padding: 0; }
-        #map-light, #map-dark { position: relative; width: 50%; height: 100vh; float: left; }
+        #map-light, #map-dark, #map-pale { position: relative; width: 33.33%; height: 100vh; float: left; }
     </style>
 </head>
 <body>
     <div id="map-light"></div>
     <div id="map-dark"></div>
+    <div id="map-pale"></div>
     <script>
         // Placeholder for light style URL
         const lightStyleUrl = 'gsi-style-maniawase.json';
         // Placeholder for dark style URL
         const darkStyleUrl = 'gsi-style-maniawase-dark.json';
+        // Placeholder for pale style URL
+        const paleStyleUrl = 'gsi-style-maniawase-pale.json';
 
         const mapLight = new maplibregl.Map({
             container: 'map-light',
@@ -38,37 +41,42 @@
             pitch: 0
         });
 
-        function syncMaps(map1, map2) {
+        const mapPale = new maplibregl.Map({
+            container: 'map-pale',
+            style: paleStyleUrl,
+            center: [139.767, 35.681],
+            zoom: 13,
+            bearing: 0,
+            pitch: 0
+        });
+
+        function syncMaps(maps) {
             let isMoving = false;
 
-            map1.on('moveend', () => {
-                if (isMoving) return;
-                isMoving = true;
-                map2.jumpTo({
-                    center: map1.getCenter(),
-                    zoom: map1.getZoom(),
-                    bearing: map1.getBearing(),
-                    pitch: map1.getPitch()
+            maps.forEach((map, index) => {
+                map.on('moveend', () => {
+                    if (isMoving) return;
+                    isMoving = true;
+                    maps.forEach((otherMap, otherIndex) => {
+                        if (index !== otherIndex) {
+                            otherMap.jumpTo({
+                                center: map.getCenter(),
+                                zoom: map.getZoom(),
+                                bearing: map.getBearing(),
+                                pitch: map.getPitch()
+                            });
+                        }
+                    });
+                    isMoving = false;
                 });
-                isMoving = false;
-            });
-
-            map2.on('moveend', () => {
-                if (isMoving) return;
-                isMoving = true;
-                map1.jumpTo({
-                    center: map2.getCenter(),
-                    zoom: map2.getZoom(),
-                    bearing: map2.getBearing(),
-                    pitch: map2.getPitch()
-                });
-                isMoving = false;
             });
         }
 
         mapLight.on('load', () => {
             mapDark.on('load', () => {
-                syncMaps(mapLight, mapDark);
+                mapPale.on('load', () => {
+                    syncMaps([mapLight, mapDark, mapPale]);
+                });
             });
         });
     </script>

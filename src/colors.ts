@@ -162,6 +162,59 @@ export const colors: Record<string, ThemeColors> = {
     blueLabel: oc.indigo[4],
     halo: oc.black,
   },
+  pale: {
+    // Background - Clean off-white for a paper-like feel
+    background: oc.gray[0],
+
+    // Water - Very light and soft blue
+    water: oc.blue[0],
+    lakeRiverLine: oc.blue[1],
+    coastline: oc.blue[2],
+    seaRoute: "#dbe4ff", // Soft blue-gray not in open-color
+
+    // Landforma (Terrain/Land Cover) - Extremely muted natural tones
+    landformaGreen: "#f4fcf0", // Lighter than oc.green[0]
+    landformaBlue: "#f0f4ff",  // Lighter than oc.indigo[0]
+    landformaYellow: "#fff9db", // Lighter than oc.yellow[0]
+    landformaDefault: oc.gray[0],
+
+    // Contour Lines - Subtle brown to blend with the background
+    contourMain: ocx.brown[2],
+    contourThin: ocx.brown[1],
+
+    // Structure (General) - Muted grays to avoid visual clutter
+    structurel: oc.gray[2],
+    wstructurea: oc.white,
+    buildingFill: oc.gray[1],
+    buildingOutline: oc.gray[3],
+
+    // Roads - Following GSI Pale style (muted oranges and yellows)
+    roadExpressway: oc.teal[1],
+    roadNational: oc.orange[1],
+    roadPrefectural: oc.yellow[1],
+    roadFillExpressway: oc.white,
+    roadFillNational: oc.white,
+    roadFillPrefectural: oc.white,
+    roadFillDefault: oc.white,
+    footway: ocx.brown[3],
+    roadNoLabel: oc.white,
+
+    // Railways - Subtle dark grays instead of stark black
+    railway: oc.gray[5],
+    railwaySecondary: oc.gray[4],
+    station: oc.red[3],
+    stationRailState: oc.red[1],
+
+    // Boundaries - Soft purples and grays
+    boundaryCountry: oc.grape[3],
+    boundaryDefault: oc.gray[3],
+
+    // Labels (Text, Icons) - Legible but not piercing
+    labelDefault: oc.gray[9],
+    greenLabel: oc.green[8],
+    blueLabel: oc.blue[8],
+    halo: oc.white,
+  },
 };
 
 export type ColorTheme = typeof colors;

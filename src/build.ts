@@ -10,6 +10,10 @@ const darkStyleJson = createStyle(colors.dark, {
   "name": "gsi-style-maniawase-dark",
   "sprite": `${URL_PREFIX}sprite/dark`,
 });
+const paleStyleJson = createStyle(colors.pale, {
+  "name": "gsi-style-maniawase-pale",
+  "sprite": "https://gsi-cyberjapan.github.io/gsivectortile-mapbox-gl-js/sprite/pale",
+});
 
 const projectRoot = process.env.APP_ROOT_PATH ? path.resolve(process.env.APP_ROOT_PATH) : path.resolve(__dirname, '..');
 const outputDir = path.join(projectRoot, 'dist');
@@ -17,6 +21,7 @@ const spriteDir = path.join(projectRoot, 'sprite');
 const spriteOutputDir = path.join(outputDir, 'sprite');
 const lightOutputPath = path.join(outputDir, 'gsi-style-maniawase.json');
 const darkOutputPath = path.join(outputDir, 'gsi-style-maniawase-dark.json');
+const paleOutputPath = path.join(outputDir, 'gsi-style-maniawase-pale.json');
 
 // Ensure the dist directory exists
 fs.mkdirSync(outputDir, { recursive: true });
@@ -50,6 +55,8 @@ fs.writeFileSync(lightOutputPath, JSON.stringify(lightStyleJson), 'utf-8');
 console.log(`Style JSON file created at: ${path.relative(process.cwd(), lightOutputPath)}`);
 fs.writeFileSync(darkOutputPath, JSON.stringify(darkStyleJson), 'utf-8');
 console.log(`Style JSON file created at: ${path.relative(process.cwd(), darkOutputPath)}`);
+fs.writeFileSync(paleOutputPath, JSON.stringify(paleStyleJson), 'utf-8');
+console.log(`Style JSON file created at: ${path.relative(process.cwd(), paleOutputPath)}`);
 
 // --- New code for HTML generation ---
 const templatePath = path.join(__dirname, 'template.html');
@@ -58,7 +65,8 @@ const htmlTemplate = fs.readFileSync(templatePath, 'utf-8');
 // Replace placeholders in the HTML template
 const finalHtml = htmlTemplate
     .replace('gsi-style-maniawase.json', path.relative(outputDir, lightOutputPath))
-    .replace('gsi-style-maniawase-dark.json', path.relative(outputDir, darkOutputPath));
+    .replace('gsi-style-maniawase-dark.json', path.relative(outputDir, darkOutputPath))
+    .replace('gsi-style-maniawase-pale.json', path.relative(outputDir, paleOutputPath));
 
 const htmlOutputPath = path.join(outputDir, 'index.html');
 fs.writeFileSync(htmlOutputPath, finalHtml, 'utf-8');
