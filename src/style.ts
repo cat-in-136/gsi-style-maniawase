@@ -88,609 +88,608 @@ const ICON_IMAGE_710X_EXPRESSION = createIconMatch(FTCODE_ICON_RECORD_710X);
 /// icon-image value for symbol layer for baseline triangulation benchmark (710x)
 const ICON_IMAGE_WITHOUT_710X_EXPRESSION = createIconMatch(FTCODE_ICON_RECORD_WITHOUT_710X);
 
-export function createStyle(colors: ThemeColors): StyleSpecification {
-  return {
-  "version": 8,
-  "name": "gsi-style-maniawase",
-  "metadata": { "maputnik:renderer": "mbgljs" },
-  "sources": {
-    "gsibv-vectortile-source-1-4-16": {
-      "type": "vector",
-      "tiles": [
-        "https://cyberjapandata.gsi.go.jp/xyz/experimental_bvmap/{z}/{x}/{y}.pbf"
-      ],
-      "minzoom": 4,
-      "maxzoom": 16,
-      "attribution": "<a href=\"https://maps.gsi.go.jp/vector/\" target=\"_blank\">地理院地図Vector（仮称）</a>"
-    }
-  },
-  "sprite": "https://gsi-cyberjapan.github.io/gsivectortile-mapbox-gl-js/sprite/std",
-  "glyphs": "https://maps.gsi.go.jp/xyz/noto-jp/{fontstack}/{range}.pbf",
-  "layers": [
-    {
-      "id": "background",
-      "type": "background",
-      "paint": { "background-color": colors.background }
-    },
-    {
-      "id": "water",
-      "type": "fill",
-      "source": "gsibv-vectortile-source-1-4-16",
-      "source-layer": "waterarea",
-      "paint": { "fill-color": colors.water }
-    },
-    {
-      "id": "landforma",
-      "type": "fill",
-      "source": "gsibv-vectortile-source-1-4-16",
-      "source-layer": "landforma",
-      "paint": {
-        "fill-color": [
-          "match",
-          ["get", "ftCode"],
-          7401, colors.landformaGreen,
-          7402, colors.landformaBlue,
-          7403, colors.landformaYellow,
-          colors.landformaDefault
-        ]
-      }
-    },
-    {
-      "id": "contour",
-      "type": "line",
-      "source": "gsibv-vectortile-source-1-4-16",
-      "source-layer": "contour",
-      "minzoom": 11,
-      "paint": {
-        "line-color": ["match", ["get", "altiFlag"], 0, colors.contourMain, colors.contourThin],
-        "line-width": ["match", ["get", "altiFlag"], 0, 1.4, 0.7],
-        "line-opacity": [
-          "interpolate", ["linear"], ["zoom"],
-          13.5, 1,
-          14, 0.25,
-          16.5, 1
-        ]
-      }
-    },
-    {
-      "id": "contour-label",
-      "type": "symbol",
-      "source": "gsibv-vectortile-source-1-4-16",
-      "source-layer": "contour",
-      "layout": {
-        "text-allow-overlap": true,
-        "text-ignore-placement": true,
-        "symbol-placement": "line",
-        "text-max-width": 999,
-        "text-size": [
-          "interpolate", ["linear"], ["zoom"],
-          14, 10,
-          17, 13
+export function createStyle(colors: ThemeColors, styleOverwrite?: Partial<StyleSpecification>): StyleSpecification {
+  return {...{
+    "version": 8,
+    "name": "gsi-style-maniawase",
+    "metadata": { "maputnik:renderer": "mbgljs" },
+    "sources": {
+      "gsibv-vectortile-source-1-4-16": {
+        "type": "vector",
+        "tiles": [
+          "https://cyberjapandata.gsi.go.jp/xyz/experimental_bvmap/{z}/{x}/{y}.pbf"
         ],
-        "text-max-angle": 360,
-        "text-anchor": "center",
-        "text-pitch-alignment": "viewport",
-        "text-rotation-alignment": "map",
-        "icon-pitch-alignment": "auto",
-        "icon-rotation-alignment": "auto",
-        "text-field": "{alti}",
-        "text-font": ["NotoSansCJKjp-Regular"],
-        "icon-allow-overlap": true,
-        "text-keep-upright": true
+        "minzoom": 4,
+        "maxzoom": 16,
+        "attribution": "<a href=\"https://maps.gsi.go.jp/vector/\" target=\"_blank\">地理院地図Vector（仮称）</a>"
+      }
+    },
+    "sprite": "https://gsi-cyberjapan.github.io/gsivectortile-mapbox-gl-js/sprite/std",
+    "glyphs": "https://maps.gsi.go.jp/xyz/noto-jp/{fontstack}/{range}.pbf",
+    "layers": [
+      {
+        "id": "background",
+        "type": "background",
+        "paint": { "background-color": colors.background }
       },
-      "paint": {
-        "text-color": ["match", ["get", "altiFlag"], 0, colors.contourMain, colors.contourThin],
-        "text-opacity": [
-          "interpolate", ["linear"], ["zoom"],
-          14, 0.25,
-          16.5, 1
-        ],
-        "text-halo-color": colors.halo,
-        "text-halo-width": 2
-      }
-    },
-    {
-      "id": "structurel",
-      "type": "fill",
-      "source": "gsibv-vectortile-source-1-4-16",
-      "source-layer": "structurel",
-      "filter": ["all", ["in", "ftCode", 5501, 5511, 5514, 5515, 5532, 5501]],
-      "paint": { "fill-color": colors.structurel }
-    },
-    {
-      "id": "wstructurea",
-      "type": "fill",
-      "source": "gsibv-vectortile-source-1-4-16",
-      "source-layer": "wstructurea",
-      "paint": { "fill-color": colors.wstructurea }
-    },
-    {
-      "id": "coastline",
-      "type": "line",
-      "source": "gsibv-vectortile-source-1-4-16",
-      "source-layer": "coastline",
-      "paint": { "line-color": colors.coastline, "line-width": 1 }
-    },
-    {
-      "id": "lake",
-      "type": "line",
-      "source": "gsibv-vectortile-source-1-4-16",
-      "source-layer": "lake",
-      "paint": { "line-color": colors.lakeRiverLine }
-    },
-    {
-      "id": "river",
-      "type": "line",
-      "source": "gsibv-vectortile-source-1-4-16",
-      "source-layer": "river",
-      "paint": { "line-color": colors.lakeRiverLine }
-    },
-    {
-      "id": "boundary",
-      "type": "line",
-      "source": "gsibv-vectortile-source-1-4-16",
-      "source-layer": "boundary",
-      "filter": ["any", ["!in", "ftCode", 1211, 1212, 51211, 51212]],
-      "paint": {
-        "line-color": colors.boundaryDefault,
-        "line-width": 1
-      }
-    },
-    {
-      "id": "boundary-country",
-      "type": "line",
-      "source": "gsibv-vectortile-source-1-4-16",
-      "source-layer": "boundary",
-      "filter": ["any", ["in", "ftCode", 1211, 1212, 51211, 51212]],
-      "paint": {
-        "line-color": colors.boundaryCountry,
-        "line-width": ["match", ["get", "ftCode"], 1211, 3, 1212, 2, 1],
-        "line-dasharray": [7, 2, 1, 2]
-      }
-    },
-    {
-      "id": "searoute",
-      "type": "line",
-      "source": "gsibv-vectortile-source-1-4-16",
-      "source-layer": "searoute",
-      "paint": {
-        "line-color": colors.seaRoute,
-        "line-dasharray": [10, 10],
-        "line-width": 1
-      }
-    },
-    {
-      "id": "road",
-      "type": "line",
-      "source": "gsibv-vectortile-source-1-4-16",
-      "source-layer": "road",
-      "maxzoom": 14,
-      "filter": ["all", [">=", "ftCode", 2700], ["<=", "ftCode", 2799]],
-      "layout": {
-        "line-cap": "square",
-        "line-join": "round",
-        "line-sort-key": [
-          "+",
-          ["match", ["get", "rdCtg"], 0, 30, 1, 20, 3, 40, 10],
-          ["to-number", ["get", "rnkWidth"]]
-        ]
+      {
+        "id": "water",
+        "type": "fill",
+        "source": "gsibv-vectortile-source-1-4-16",
+        "source-layer": "waterarea",
+        "paint": { "fill-color": colors.water }
       },
-      "paint": {
-        "line-color": [
-          "case",
-          ["==", ["get", "motorway"], 1],
-          colors.roadExpressway,
-          [
+      {
+        "id": "landforma",
+        "type": "fill",
+        "source": "gsibv-vectortile-source-1-4-16",
+        "source-layer": "landforma",
+        "paint": {
+          "fill-color": [
             "match",
-            ["get", "rdCtg"],
-            0, colors.roadNational,
-            1, colors.roadPrefectural,
-            3, colors.roadExpressway,
-            colors.boundaryDefault
+            ["get", "ftCode"],
+            7401, colors.landformaGreen,
+            7402, colors.landformaBlue,
+            7403, colors.landformaYellow,
+            colors.landformaDefault
           ]
-        ],
-        "line-width": [
-          "case",
-          ["all", ["has", "rnkWidth"], ["<=", ["get", "rnkWidth"], 4]],
-          ["+", ["get", "rnkWidth"], 1],
-          1
-        ],
-        "line-opacity": ["match", ["get", "ftCode"], [2704, 2714], 0.5, 1]
-      }
-    },
-    {
-      "id": "road-boundary-z16",
-      "type": "line",
-      "source": "gsibv-vectortile-source-1-4-16",
-      "source-layer": "road",
-      "minzoom": 16,
-      "filter": [
-        "any",
-        ["all", [">=", "ftCode", 2200], ["<=", "ftCode", 2209]],
-        ["all", [">=", "ftCode", 2230], ["<=", "ftCode", 2299]]
-      ],
-      "paint": { "line-color": colors.buildingOutline, "line-width": 2 }
-    },
-    {
-      "id": "road-boundary-dash-z16",
-      "type": "line",
-      "source": "gsibv-vectortile-source-1-4-16",
-      "source-layer": "road",
-      "minzoom": 16,
-      "filter": ["all", [">=", "ftCode", 2220], ["<=", "ftCode", 2229]],
-      "paint": {
-        "line-color": colors.buildingOutline,
-        "line-width": 2,
-        "line-dasharray": [1, 1]
-      }
-    },
-    {
-      "id": "road-footway",
-      "type": "line",
-      "source": "gsibv-vectortile-source-1-4-16",
-      "source-layer": "road",
-      "filter": ["all", ["==", "ftCode", 2721]],
-      "paint": {
-        "line-color": [
-          "interpolate", ["linear"], ["zoom"],
-          15, colors.boundaryDefault,
-          16, colors.footway
-        ],
-        "line-width": [
-          "interpolate", ["linear"], ["zoom"],
-          15, 1,
-          16, 2
-        ],
-        "line-dasharray": [6, 1]
-      }
-    },
-    {
-      "id": "road-z14-boundary",
-      "type": "line",
-      "source": "gsibv-vectortile-source-1-4-16",
-      "source-layer": "road",
-      "minzoom": 14,
-      "maxzoom": 16.25,
-      "filter": [
-        "all",
-        [">=", "ftCode", 2700],
-        ["<=", "ftCode", 2799],
-        ["!=", "ftCode", 2721]
-      ],
-      "layout": {
-        "line-cap": "square",
-        "line-join": "round",
-        "line-sort-key": [
-          "+",
-          ["match", ["get", "rdCtg"], 0, 30, 1, 20, 3, 40, 10],
-          ["to-number", ["get", "rnkWidth"]]
-        ]
+        }
       },
-      "paint": {
-        "line-color": [
-          "case",
-          ["==", ["get", "motorway"], 1],
-          colors.roadExpressway,
-          [
+      {
+        "id": "contour",
+        "type": "line",
+        "source": "gsibv-vectortile-source-1-4-16",
+        "source-layer": "contour",
+        "minzoom": 11,
+        "paint": {
+          "line-color": ["match", ["get", "altiFlag"], 0, colors.contourMain, colors.contourThin],
+          "line-width": ["match", ["get", "altiFlag"], 0, 1.4, 0.7],
+          "line-opacity": [
+            "interpolate", ["linear"], ["zoom"],
+            13.5, 1,
+            14, 0.25,
+            16.5, 1
+          ]
+        }
+      },
+      {
+        "id": "contour-label",
+        "type": "symbol",
+        "source": "gsibv-vectortile-source-1-4-16",
+        "source-layer": "contour",
+        "layout": {
+          "text-allow-overlap": true,
+          "text-ignore-placement": true,
+          "symbol-placement": "line",
+          "text-max-width": 999,
+          "text-size": [
+            "interpolate", ["linear"], ["zoom"],
+            14, 10,
+            17, 13
+          ],
+          "text-max-angle": 360,
+          "text-anchor": "center",
+          "text-pitch-alignment": "viewport",
+          "text-rotation-alignment": "map",
+          "icon-pitch-alignment": "auto",
+          "icon-rotation-alignment": "auto",
+          "text-field": "{alti}",
+          "text-font": ["NotoSansCJKjp-Regular"],
+          "icon-allow-overlap": true,
+          "text-keep-upright": true
+        },
+        "paint": {
+          "text-color": ["match", ["get", "altiFlag"], 0, colors.contourMain, colors.contourThin],
+          "text-opacity": [
+            "interpolate", ["linear"], ["zoom"],
+            14, 0.25,
+            16.5, 1
+          ],
+          "text-halo-color": colors.halo,
+          "text-halo-width": 2
+        }
+      },
+      {
+        "id": "structurel",
+        "type": "fill",
+        "source": "gsibv-vectortile-source-1-4-16",
+        "source-layer": "structurel",
+        "filter": ["all", ["in", "ftCode", 5501, 5511, 5514, 5515, 5532, 5501]],
+        "paint": { "fill-color": colors.structurel }
+      },
+      {
+        "id": "wstructurea",
+        "type": "fill",
+        "source": "gsibv-vectortile-source-1-4-16",
+        "source-layer": "wstructurea",
+        "paint": { "fill-color": colors.wstructurea }
+      },
+      {
+        "id": "coastline",
+        "type": "line",
+        "source": "gsibv-vectortile-source-1-4-16",
+        "source-layer": "coastline",
+        "paint": { "line-color": colors.coastline, "line-width": 1 }
+      },
+      {
+        "id": "lake",
+        "type": "line",
+        "source": "gsibv-vectortile-source-1-4-16",
+        "source-layer": "lake",
+        "paint": { "line-color": colors.lakeRiverLine }
+      },
+      {
+        "id": "river",
+        "type": "line",
+        "source": "gsibv-vectortile-source-1-4-16",
+        "source-layer": "river",
+        "paint": { "line-color": colors.lakeRiverLine }
+      },
+      {
+        "id": "boundary",
+        "type": "line",
+        "source": "gsibv-vectortile-source-1-4-16",
+        "source-layer": "boundary",
+        "filter": ["any", ["!in", "ftCode", 1211, 1212, 51211, 51212]],
+        "paint": {
+          "line-color": colors.boundaryDefault,
+          "line-width": 1
+        }
+      },
+      {
+        "id": "boundary-country",
+        "type": "line",
+        "source": "gsibv-vectortile-source-1-4-16",
+        "source-layer": "boundary",
+        "filter": ["any", ["in", "ftCode", 1211, 1212, 51211, 51212]],
+        "paint": {
+          "line-color": colors.boundaryCountry,
+          "line-width": ["match", ["get", "ftCode"], 1211, 3, 1212, 2, 1],
+          "line-dasharray": [7, 2, 1, 2]
+        }
+      },
+      {
+        "id": "searoute",
+        "type": "line",
+        "source": "gsibv-vectortile-source-1-4-16",
+        "source-layer": "searoute",
+        "paint": {
+          "line-color": colors.seaRoute,
+          "line-dasharray": [10, 10],
+          "line-width": 1
+        }
+      },
+      {
+        "id": "road",
+        "type": "line",
+        "source": "gsibv-vectortile-source-1-4-16",
+        "source-layer": "road",
+        "maxzoom": 14,
+        "filter": ["all", [">=", "ftCode", 2700], ["<=", "ftCode", 2799]],
+        "layout": {
+          "line-cap": "square",
+          "line-join": "round",
+          "line-sort-key": [
+            "+",
+            ["match", ["get", "rdCtg"], 0, 30, 1, 20, 3, 40, 10],
+            ["to-number", ["get", "rnkWidth"]]
+          ]
+        },
+        "paint": {
+          "line-color": [
+            "case",
+            ["==", ["get", "motorway"], 1],
+            colors.roadExpressway,
+            [
+              "match",
+              ["get", "rdCtg"],
+              0, colors.roadNational,
+              1, colors.roadPrefectural,
+              3, colors.roadExpressway,
+              colors.boundaryDefault
+            ]
+          ],
+          "line-width": [
+            "case",
+            ["all", ["has", "rnkWidth"], ["<=", ["get", "rnkWidth"], 4]],
+            ["+", ["get", "rnkWidth"], 1],
+            1
+          ],
+          "line-opacity": ["match", ["get", "ftCode"], [2704, 2714], 0.5, 1]
+        }
+      },
+      {
+        "id": "road-boundary-z16",
+        "type": "line",
+        "source": "gsibv-vectortile-source-1-4-16",
+        "source-layer": "road",
+        "minzoom": 16,
+        "filter": [
+          "any",
+          ["all", [">=", "ftCode", 2200], ["<=", "ftCode", 2209]],
+          ["all", [">=", "ftCode", 2230], ["<=", "ftCode", 2299]]
+        ],
+        "paint": { "line-color": colors.buildingOutline, "line-width": 2 }
+      },
+      {
+        "id": "road-boundary-dash-z16",
+        "type": "line",
+        "source": "gsibv-vectortile-source-1-4-16",
+        "source-layer": "road",
+        "minzoom": 16,
+        "filter": ["all", [">=", "ftCode", 2220], ["<=", "ftCode", 2229]],
+        "paint": {
+          "line-color": colors.buildingOutline,
+          "line-width": 2,
+          "line-dasharray": [1, 1]
+        }
+      },
+      {
+        "id": "road-footway",
+        "type": "line",
+        "source": "gsibv-vectortile-source-1-4-16",
+        "source-layer": "road",
+        "filter": ["all", ["==", "ftCode", 2721]],
+        "paint": {
+          "line-color": [
+            "interpolate", ["linear"], ["zoom"],
+            15, colors.boundaryDefault,
+            16, colors.footway
+          ],
+          "line-width": [
+            "interpolate", ["linear"], ["zoom"],
+            15, 1,
+            16, 2
+          ],
+          "line-dasharray": [6, 1]
+        }
+      },
+      {
+        "id": "road-z14-boundary",
+        "type": "line",
+        "source": "gsibv-vectortile-source-1-4-16",
+        "source-layer": "road",
+        "minzoom": 14,
+        "maxzoom": 16.25,
+        "filter": [
+          "all",
+          [">=", "ftCode", 2700],
+          ["<=", "ftCode", 2799],
+          ["!=", "ftCode", 2721]
+        ],
+        "layout": {
+          "line-cap": "square",
+          "line-join": "round",
+          "line-sort-key": [
+            "+",
+            ["match", ["get", "rdCtg"], 0, 30, 1, 20, 3, 40, 10],
+            ["to-number", ["get", "rnkWidth"]]
+          ]
+        },
+        "paint": {
+          "line-color": [
+            "case",
+            ["==", ["get", "motorway"], 1],
+            colors.roadExpressway,
+            [
+              "match",
+              ["get", "rdCtg"],
+              0, colors.roadNational,
+              1, colors.roadPrefectural,
+              3, colors.roadExpressway,
+              colors.structurel
+            ]
+          ],
+          "line-opacity": ["match", ["get", "ftCode"], [2704, 2714], 0.5, 1],
+          "line-width": 1,
+          "line-gap-width": [
+            "interpolate",
+            ["linear"],
+            ["zoom"],
+            14, ["+", ["to-number", ["get", "rnkWidth"]], 1],
+            16, [
+              "match",
+              ["to-number", ["get", "rnkWidth"]],
+              0, 4,
+              1, 8,
+              2, 12,
+              3, 18,
+              28
+            ]
+          ]
+        }
+      },
+      {
+        "id": "road-z14",
+        "type": "line",
+        "source": "gsibv-vectortile-source-1-4-16",
+        "source-layer": "road",
+        "minzoom": 14,
+        "maxzoom": 16.25,
+        "filter": [
+          "all",
+          [">=", "ftCode", 2700],
+          ["<=", "ftCode", 2799],
+          ["!=", "ftCode", 2721]
+        ],
+        "layout": {
+          "line-cap": "square",
+          "line-join": "round",
+          "line-sort-key": [
+            "+",
+            ["match", ["get", "rdCtg"], 0, 30, 1, 20, 3, 40, 10],
+            ["to-number", ["get", "rnkWidth"]]
+          ]
+        },
+        "paint": {
+          "line-color": [
+            "case",
+            ["==", ["get", "motorway"], 1],
+            colors.roadFillExpressway,
+            [
+              "match",
+              ["get", "rdCtg"],
+              0, colors.roadFillNational,
+              1, colors.roadFillPrefectural,
+              3, colors.roadFillExpressway,
+              colors.roadFillDefault
+            ]
+          ],
+          "line-width": [
+            "interpolate",
+            ["linear"],
+            ["zoom"],
+            14, ["+", ["to-number", ["get", "rnkWidth"]], 1],
+            16, [
+              "match",
+              ["to-number", ["get", "rnkWidth"]],
+              0, 4,
+              1, 8,
+              2, 12,
+              3, 18,
+              28
+            ]
+          ],
+          "line-opacity": ["match", ["get", "ftCode"], [2704, 2714], 0.5, 1]
+        }
+      },
+      {
+        "id": "railway",
+        "type": "line",
+        "source": "gsibv-vectortile-source-1-4-16",
+        "source-layer": "railway",
+        "maxzoom": 16,
+        "filter": ["all", ["==", "ftCode", 8201]],
+        "paint": {
+          "line-color": [
             "match",
-            ["get", "rdCtg"],
-            0, colors.roadNational,
-            1, colors.roadPrefectural,
-            3, colors.roadExpressway,
-            colors.structurel
-          ]
-        ],
-        "line-opacity": ["match", ["get", "ftCode"], [2704, 2714], 0.5, 1],
-        "line-width": 1,
-        "line-gap-width": [
-          "interpolate",
-          ["linear"],
-          ["zoom"],
-          14, ["+", ["to-number", ["get", "rnkWidth"]], 1],
-          16, [
+            ["floor", ["/", ["to-number", ["get", "rtCode"]], 1000000]],
+            [40201, 40216],
+            colors.railway,
+            colors.railwaySecondary
+          ],
+          "line-width": [
+            "interpolate", ["linear"], ["zoom"],
+            8, 1,
+            12, 3
+          ],
+          "line-opacity": ["match", ["get", "railState"], [2, 3, 100], 0.5, 1]
+        }
+      },
+      {
+        "id": "railway-z16",
+        "type": "line",
+        "source": "gsibv-vectortile-source-1-4-16",
+        "source-layer": "railway",
+        "filter": ["any", ["!has", "ftCode"], ["!=", "ftCode", 8201]],
+        "paint": {
+          "line-color": colors.railwaySecondary,
+          "line-opacity": [
+            "case",
+            ["any", ["==", ["get", "ftCode"], 2804]],
+            0.5,
+            1
+          ],
+          "line-width": 2
+        }
+      },
+      {
+        "id": "building",
+        "type": "fill",
+        "source": "gsibv-vectortile-source-1-4-16",
+        "source-layer": "building",
+        "minzoom": 15,
+        "paint": {
+          "fill-color": colors.buildingFill,
+          "fill-outline-color": colors.buildingOutline
+        }
+      },
+      {
+        "id": "railway-station",
+        "type": "line",
+        "source": "gsibv-vectortile-source-1-4-16",
+        "source-layer": "railway",
+        "filter": ["all", ["has", "staCode"], ["!=", "staCode", "0"]],
+        "paint": {
+          "line-color": [
             "match",
-            ["to-number", ["get", "rnkWidth"]],
-            0, 4,
-            1, 8,
-            2, 12,
-            3, 18,
-            28
-          ]
-        ]
-      }
-    },
-    {
-      "id": "road-z14",
-      "type": "line",
-      "source": "gsibv-vectortile-source-1-4-16",
-      "source-layer": "road",
-      "minzoom": 14,
-      "maxzoom": 16.25,
-      "filter": [
-        "all",
-        [">=", "ftCode", 2700],
-        ["<=", "ftCode", 2799],
-        ["!=", "ftCode", 2721]
-      ],
-      "layout": {
-        "line-cap": "square",
-        "line-join": "round",
-        "line-sort-key": [
-          "+",
-          ["match", ["get", "rdCtg"], 0, 30, 1, 20, 3, 40, 10],
-          ["to-number", ["get", "rnkWidth"]]
-        ]
+            ["get", "railState"],
+            [2, 3], colors.stationRailState,
+            colors.station
+          ],
+          "line-width": 5
+        }
       },
-      "paint": {
-        "line-color": [
-          "case",
-          ["==", ["get", "motorway"], 1],
-          colors.roadFillExpressway,
-          [
+      {
+        "id": "transp",
+        "type": "symbol",
+        "source": "gsibv-vectortile-source-1-4-16",
+        "source-layer": "transp",
+        "layout": {
+          "icon-image": [
             "match",
-            ["get", "rdCtg"],
-            0, colors.roadFillNational,
-            1, colors.roadFillPrefectural,
-            3, colors.roadFillExpressway,
-            colors.roadFillDefault
-          ]
-        ],
-        "line-width": [
-          "interpolate",
-          ["linear"],
-          ["zoom"],
-          14, ["+", ["to-number", ["get", "rnkWidth"]], 1],
-          16, [
+            ["get", "ftCode"],
+            2901, "国道番号-20",
+            2903, "都市高速道路番号-20",
+            2904, "高速道路番号-20",
+            ""
+          ],
+          "icon-size": 0.5,
+          "text-size": 10,
+          "text-offset": [0, -0.1],
+          "text-pitch-alignment": "viewport",
+          "text-rotation-alignment": "viewport",
+          "icon-pitch-alignment": "viewport",
+          "icon-rotation-alignment": "viewport",
+          "text-field": [
+            "case",
+            ["all", ["has", "eRNo"], ["!=", ["get", "eRNo"], 0]], ["get", "eRNo"],
+            ["all", ["has", "nRNo"], ["!=", ["get", "nRNo"], 0]], ["get", "nRNo"],
+            ["get", "uRNo"]
+          ],
+          "text-font": ["NotoSansCJKjp-Regular"],
+          "symbol-placement": "point",
+          "icon-allow-overlap": true,
+          "text-keep-upright": true,
+          "text-allow-overlap": false,
+          "symbol-z-order": "auto",
+          "text-max-width": 100,
+          "visibility": "visible"
+        },
+        "paint": { "text-color": colors.roadNoLabel }
+      },
+      {
+        "id": "symbol-icon",
+        "type": "symbol",
+        "source": "gsibv-vectortile-source-1-4-16",
+        "source-layer": "symbol",
+        "filter": ["in", "ftCode", ...Object.keys(FTCODE_ICON_RECORD_WITHOUT_710X).map(Number)],
+        "layout": {
+          "icon-size": [
+            "interpolate", ["linear"], ["zoom"],
+            14, 0.33,
+            15, 0.5,
+            17, 1
+          ],
+          "icon-image": ICON_IMAGE_WITHOUT_710X_EXPRESSION,
+          "icon-pitch-alignment": "viewport",
+          "icon-rotation-alignment": "viewport",
+          "symbol-placement": "point",
+          "icon-allow-overlap": true,
+          "symbol-z-order": "auto"
+        }
+      },
+      {
+        "id": "symbol-triangulation-benchmark",
+        "type": "symbol",
+        "source": "gsibv-vectortile-source-1-4-16",
+        "source-layer": "symbol",
+        "minzoom": 16.25,
+        "filter": ["in", "ftCode", ...Object.keys(FTCODE_ICON_RECORD_710X).map(Number)],
+        "layout": {
+          "text-field": ["to-string", ["case", ["!", ["has", "alti"]], ["to-string", ""], ["==", ["get", "alti"], ""], ["to-string", ""], ["in", ".", ["to-string", ["/", ["round", ["*", ["to-number", ["get", "alti"]], 10]], 10]]], ["to-string", ["/", ["round", ["*", ["to-number", ["get", "alti"]], 10]], 10]], ["concat", ["to-string", ["/", ["round", ["*", ["to-number", ["get", "alti"]], 10]], 10]], ".0"]]],
+          "text-size": 10,
+          "text-font": ["NotoSansCJKjp-Regular"],
+          "text-anchor": "left",
+          "text-offset": [0.8, -0.1],
+          "icon-size": 0.75,
+          "icon-image": ICON_IMAGE_710X_EXPRESSION,
+          "icon-pitch-alignment": "viewport",
+          "icon-rotation-alignment": "viewport",
+          "symbol-placement": "point",
+          "icon-allow-overlap": true,
+          "symbol-z-order": "auto"
+        }
+      },
+      {
+        "id": "label",
+        "type": "symbol",
+        "source": "gsibv-vectortile-source-1-4-16",
+        "source-layer": "label",
+        "filter": ["all", ["!in", "annoCtg", 333, 334, 411, 421]],
+        "layout": {
+          "text-field": "{knj}",
+          "text-font": ["NotoSansCJKjp-Regular"],
+          "text-size": ["match", ["get", "annoCtg"], [412, 422], 14, 10],
+          "symbol-sort-key": ["case", ["==", ["get", "annoCtg"], 422], 1, 10]
+        },
+        "paint": {
+          "text-halo-color": colors.halo,
+          "text-halo-width": 2,
+          "icon-color": colors.labelDefault,
+          "text-color": [
             "match",
-            ["to-number", ["get", "rnkWidth"]],
-            0, 4,
-            1, 8,
-            2, 12,
-            3, 18,
-            28
+            ["get", "annoCtg"],
+            [412, 422], colors.greenLabel,
+            [321, 322, 323, 343, 344, 345, 347, 348], colors.blueLabel,
+            [311, 312, 313, 314, 315, 316, 333], colors.footway,
+            colors.labelDefault
           ]
-        ],
-        "line-opacity": ["match", ["get", "ftCode"], [2704, 2714], 0.5, 1]
-      }
-    },
-    {
-      "id": "railway",
-      "type": "line",
-      "source": "gsibv-vectortile-source-1-4-16",
-      "source-layer": "railway",
-      "maxzoom": 16,
-      "filter": ["all", ["==", "ftCode", 8201]],
-      "paint": {
-        "line-color": [
-          "match",
-          ["floor", ["/", ["to-number", ["get", "rtCode"]], 1000000]],
-          [40201, 40216],
-          colors.railway,
-          colors.railwaySecondary
-        ],
-        "line-width": [
-          "interpolate", ["linear"], ["zoom"],
-          8, 1,
-          12, 3
-        ],
-        "line-opacity": ["match", ["get", "railState"], [2, 3, 100], 0.5, 1]
-      }
-    },
-    {
-      "id": "railway-z16",
-      "type": "line",
-      "source": "gsibv-vectortile-source-1-4-16",
-      "source-layer": "railway",
-      "filter": ["any", ["!has", "ftCode"], ["!=", "ftCode", 8201]],
-      "paint": {
-        "line-color": colors.railwaySecondary,
-        "line-opacity": [
-          "case",
-          ["any", ["==", ["get", "ftCode"], 2804]],
-          0.5,
-          1
-        ],
-        "line-width": 2
-      }
-    },
-    {
-      "id": "building",
-      "type": "fill",
-      "source": "gsibv-vectortile-source-1-4-16",
-      "source-layer": "building",
-      "minzoom": 15,
-      "paint": {
-        "fill-color": colors.buildingFill,
-        "fill-outline-color": colors.buildingOutline
-      }
-    },
-    {
-      "id": "railway-station",
-      "type": "line",
-      "source": "gsibv-vectortile-source-1-4-16",
-      "source-layer": "railway",
-      "filter": ["all", ["has", "staCode"], ["!=", "staCode", "0"]],
-      "paint": {
-        "line-color": [
-          "match",
-          ["get", "railState"],
-          [2, 3], colors.stationRailState,
-          colors.station
-        ],
-        "line-width": 5
-      }
-    },
-    {
-      "id": "transp",
-      "type": "symbol",
-      "source": "gsibv-vectortile-source-1-4-16",
-      "source-layer": "transp",
-      "layout": {
-        "icon-image": [
-          "match",
-          ["get", "ftCode"],
-          2901, "国道番号-20",
-          2903, "都市高速道路番号-20",
-          2904, "高速道路番号-20",
-          ""
-        ],
-        "icon-size": 0.5,
-        "text-size": 10,
-        "text-offset": [0, -0.1],
-        "text-pitch-alignment": "viewport",
-        "text-rotation-alignment": "viewport",
-        "icon-pitch-alignment": "viewport",
-        "icon-rotation-alignment": "viewport",
-        "text-field": [
-          "case",
-          ["all", ["has", "eRNo"], ["!=", ["get", "eRNo"], 0]], ["get", "eRNo"],
-          ["all", ["has", "nRNo"], ["!=", ["get", "nRNo"], 0]], ["get", "nRNo"],
-          ["get", "uRNo"]
-        ],
-        "text-font": ["NotoSansCJKjp-Regular"],
-        "symbol-placement": "point",
-        "icon-allow-overlap": true,
-        "text-keep-upright": true,
-        "text-allow-overlap": false,
-        "symbol-z-order": "auto",
-        "text-max-width": 100,
-        "visibility": "visible"
+        }
       },
-      "paint": { "text-color": colors.roadNoLabel }
-    },
-    {
-      "id": "symbol-icon",
-      "type": "symbol",
-      "source": "gsibv-vectortile-source-1-4-16",
-      "source-layer": "symbol",
-      "filter": ["in", "ftCode", ...Object.keys(FTCODE_ICON_RECORD_WITHOUT_710X).map(Number)],
-      "layout": {
-        "icon-size": [
-          "interpolate", ["linear"], ["zoom"],
-          14, 0.33,
-          15, 0.5,
-          17, 1
-        ],
-        "icon-image": ICON_IMAGE_WITHOUT_710X_EXPRESSION,
-        "icon-pitch-alignment": "viewport",
-        "icon-rotation-alignment": "viewport",
-        "symbol-placement": "point",
-        "icon-allow-overlap": true,
-        "symbol-z-order": "auto"
-      }
-    },
-    {
-      "id": "symbol-triangulation-benchmark",
-      "type": "symbol",
-      "source": "gsibv-vectortile-source-1-4-16",
-      "source-layer": "symbol",
-      "minzoom": 16.25,
-      "filter": ["in", "ftCode", ...Object.keys(FTCODE_ICON_RECORD_710X).map(Number)],
-      "layout": {
-        "text-field": ["to-string", ["case", ["!", ["has", "alti"]], ["to-string", ""], ["==", ["get", "alti"], ""], ["to-string", ""], ["in", ".", ["to-string", ["/", ["round", ["*", ["to-number", ["get", "alti"]], 10]], 10]]], ["to-string", ["/", ["round", ["*", ["to-number", ["get", "alti"]], 10]], 10]], ["concat", ["to-string", ["/", ["round", ["*", ["to-number", ["get", "alti"]], 10]], 10]], ".0"]]],
-        "text-size": 10,
-        "text-font": ["NotoSansCJKjp-Regular"],
-        "text-anchor": "left",
-        "text-offset": [0.8, -0.1],
-        "icon-size": 0.75,
-        "icon-image": ICON_IMAGE_710X_EXPRESSION,
-        "icon-pitch-alignment": "viewport",
-        "icon-rotation-alignment": "viewport",
-        "symbol-placement": "point",
-        "icon-allow-overlap": true,
-        "symbol-z-order": "auto"
-      }
-    },
-    {
-      "id": "label",
-      "type": "symbol",
-      "source": "gsibv-vectortile-source-1-4-16",
-      "source-layer": "label",
-      "filter": ["all", ["!in", "annoCtg", 333, 334, 411, 421]],
-      "layout": {
-        "text-field": "{knj}",
-        "text-font": ["NotoSansCJKjp-Regular"],
-        "text-size": ["match", ["get", "annoCtg"], [412, 422], 14, 10],
-        "symbol-sort-key": ["case", ["==", ["get", "annoCtg"], 422], 1, 10]
+      {
+        "id": "label-transportway",
+        "type": "symbol",
+        "source": "gsibv-vectortile-source-1-4-16",
+        "source-layer": "label",
+        "filter": ["any", ["in", "annoCtg", 411, 421]],
+        "layout": {
+          "text-field": "{knj}",
+          "text-font": ["NotoSansCJKjp-Regular"],
+          "text-size": [
+            "interpolate", ["linear"], ["zoom"],
+            10, 12,
+            13, 15
+          ],
+          "text-allow-overlap": true,
+          "text-rotate": [
+            "case",
+            ["==", ["get", "arrng"], 2],
+            ["*", ["+", ["to-number", ["get", "arrngAgl"]], 90], -1],
+            ["*", ["to-number", ["get", "arrngAgl"]], -1]
+          ],
+          "text-pitch-alignment": "viewport",
+          "text-rotation-alignment": "viewport",
+          "icon-pitch-alignment": "auto",
+          "icon-rotation-alignment": "auto"
+        },
+        "paint": {
+          "text-halo-color": colors.halo,
+          "text-halo-width": 2,
+          "text-color": [
+            "match",
+            ["get", "annoCtg"],
+            [411, 421], colors.greenLabel,
+            colors.labelDefault
+          ]
+        }
       },
-      "paint": {
-        "text-halo-color": colors.halo,
-        "text-halo-width": 2,
-        "icon-color": colors.labelDefault,
-        "text-color": [
-          "match",
-          ["get", "annoCtg"],
-          [412, 422], colors.greenLabel,
-          [321, 322, 323, 343, 344, 345, 347, 348], colors.blueLabel,
-          [311, 312, 313, 314, 315, 316, 333], colors.footway,
-          colors.labelDefault
-        ]
+      {
+        "id": "label-country",
+        "type": "symbol",
+        "source": "gsibv-vectortile-source-1-4-16",
+        "source-layer": "label",
+        "filter": ["any", ["in", "annoCtg", 140, 110, 210]],
+        "layout": {
+          "text-field": "{knj}",
+          "text-font": ["NotoSansCJKjp-Bold"],
+          "text-size": [
+            "interpolate",
+            ["linear"],
+            ["zoom"],
+            6, 20,
+            14, ["match", ["get", "annoCtg"], 210, 14, 20],
+            16, 20
+          ],
+          "text-allow-overlap": true,
+          "text-rotate": 0
+        },
+        "paint": {
+          "text-halo-color": colors.halo,
+          "text-halo-width": 2,
+          "text-color": colors.labelDefault
+        }
       }
-    },
-    {
-      "id": "label-transportway",
-      "type": "symbol",
-      "source": "gsibv-vectortile-source-1-4-16",
-      "source-layer": "label",
-      "filter": ["any", ["in", "annoCtg", 411, 421]],
-      "layout": {
-        "text-field": "{knj}",
-        "text-font": ["NotoSansCJKjp-Regular"],
-        "text-size": [
-          "interpolate", ["linear"], ["zoom"],
-          10, 12,
-          13, 15
-        ],
-        "text-allow-overlap": true,
-        "text-rotate": [
-          "case",
-          ["==", ["get", "arrng"], 2],
-          ["*", ["+", ["to-number", ["get", "arrngAgl"]], 90], -1],
-          ["*", ["to-number", ["get", "arrngAgl"]], -1]
-        ],
-        "text-pitch-alignment": "viewport",
-        "text-rotation-alignment": "viewport",
-        "icon-pitch-alignment": "auto",
-        "icon-rotation-alignment": "auto"
-      },
-      "paint": {
-        "text-halo-color": colors.halo,
-        "text-halo-width": 2,
-        "text-color": [
-          "match",
-          ["get", "annoCtg"],
-          [411, 421], colors.greenLabel,
-          colors.labelDefault
-        ]
-      }
-    },
-    {
-      "id": "label-country",
-      "type": "symbol",
-      "source": "gsibv-vectortile-source-1-4-16",
-      "source-layer": "label",
-      "filter": ["any", ["in", "annoCtg", 140, 110, 210]],
-      "layout": {
-        "text-field": "{knj}",
-        "text-font": ["NotoSansCJKjp-Bold"],
-        "text-size": [
-          "interpolate",
-          ["linear"],
-          ["zoom"],
-          6, 20,
-          14, ["match", ["get", "annoCtg"], 210, 14, 20],
-          16, 20
-        ],
-        "text-allow-overlap": true,
-        "text-rotate": 0
-      },
-      "paint": {
-        "text-halo-color": colors.halo,
-        "text-halo-width": 2,
-        "text-color": colors.labelDefault
-      }
-    }
-  ],
-};
-
+    ],
+  }, ...styleOverwrite};
 }
