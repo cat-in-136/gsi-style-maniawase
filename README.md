@@ -6,6 +6,7 @@
 
 * ライトテーマ <https://cat-in-136.github.io/gsi-style-maniawase/gsi-style-maniawase.json>
 * ダークテーマ <https://cat-in-136.github.io/gsi-style-maniawase/gsi-style-maniawase-dark.json>
+* ペールテーマ <https://cat-in-136.github.io/gsi-style-maniawase/gsi-style-maniawase-pale.json>
 
 
 ## 思想：間に合わせ (Maniawase)
@@ -27,6 +28,7 @@ npm run build
 
 * `gsi-style-maniawase.json` - ライトテーマ
 * `gsi-style-maniawase-dark.json` - ダークテーマ
+* `gsi-style-maniawase-pale.json` - ペールテーマ
 
 ## カラーパレット
 
@@ -34,7 +36,7 @@ npm run build
 
 ### テーマ対応
 
-ライトテーマとダークテーマの2種類を提供しています。どちらも同じ Open Color パレットをベースに、背景色に合わせて調整されています。
+ライトテーマ、ダークテーマ、ペールテーマの3種類を提供しています。どちらも同じ Open Color パレットをベースに、背景色に合わせて調整されています。
 
 ### カスタム Brown (Open Color 拡張)
 
@@ -84,6 +86,17 @@ const map = new maplibregl.Map({
 const map = new maplibregl.Map({
   container: 'map',
   style: 'https://cat-in-136.github.io/gsi-style-maniawase/gsi-style-maniawase-dark.json',
+  center: [139.767, 35.681],
+  zoom: 13
+});
+```
+
+### ペールテーマ
+
+```javascript
+const map = new maplibregl.Map({
+  container: 'map',
+  style: 'https://cat-in-136.github.io/gsi-style-maniawase/gsi-style-maniawase-pale.json',
   center: [139.767, 35.681],
   zoom: 13
 });
