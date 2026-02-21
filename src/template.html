@@ -7,78 +7,130 @@
     <script src="https://unpkg.com/maplibre-gl@3.x/dist/maplibre-gl.js"></script>
     <link href="https://unpkg.com/maplibre-gl@3.x/dist/maplibre-gl.css" rel="stylesheet" />
     <style>
-        body { margin: 0; padding: 0; }
-        #map-light, #map-dark, #map-pale { position: relative; width: 33.33%; height: 100vh; float: left; }
+        body { margin: 0; padding: 0; height: 100vh; overflow: hidden; display: flex; }
+        .map-section { position: relative; width: 50%; height: 100vh; float: left; }
+        .section-controls { position: absolute; top: 10px; left: 10px; z-index: 1000; }
+        .section-controls select { margin: 5px; padding: 5px; }
+        .maplibregl-map { height: 100%; }
     </style>
 </head>
 <body>
-    <div id="map-light"></div>
-    <div id="map-dark"></div>
-    <div id="map-pale"></div>
+    <div class="map-section">
+        <div class="section-controls">
+            <select id="left-style-select">
+                <option value="light">Light</option>
+                <option value="dark">Dark</option>
+                <option value="pale">Pale</option>
+                <optgroup label="地理院地図">
+                    <option value="gsi_std">標準地図</option>
+                    <option value="gsi_pale">淡色地図</option>
+                </optgroup>
+            </select>
+        </div>
+        <div id="map-left"></div>
+    </div>
+    <div class="map-section">
+        <div class="section-controls">
+            <select id="right-style-select">
+                <option value="light">Light</option>
+                <option value="dark">Dark</option>
+                <option value="pale">Pale</option>
+                <optgroup label="地理院地図">
+                    <option value="gsi_std">標準地図</option>
+                    <option value="gsi_pale">淡色地図</option>
+                </optgroup>
+            </select>
+        </div>
+        <div id="map-right"></div>
+    </div>
     <script>
-        // Placeholder for light style URL
-        const lightStyleUrl = 'gsi-style-maniawase.json';
-        // Placeholder for dark style URL
-        const darkStyleUrl = 'gsi-style-maniawase-dark.json';
-        // Placeholder for pale style URL
-        const paleStyleUrl = 'gsi-style-maniawase-pale.json';
+    window.addEventListener('DOMContentLoaded', () => {
+        // スタイルURLはオブジェクトとして管理
 
-        const mapLight = new maplibregl.Map({
-            container: 'map-light',
-            style: lightStyleUrl,
+        // マップスタイルURL
+        const styleUrls = {
+            light: 'gsi-style-maniawase.json',
+            dark: 'gsi-style-maniawase-dark.json',
+            pale: 'gsi-style-maniawase-pale.json',
+            gsi_std: 'https://gsi-cyberjapan.github.io/gsivectortile-mapbox-gl-js/std.json',
+            gsi_pale: 'https://gsi-cyberjapan.github.io/gsivectortile-mapbox-gl-js/pale.json'
+        };
+
+        // 初期スタイル
+        let leftStyle = document.getElementById('left-style-select').value;
+        let rightStyle = document.getElementById('right-style-select').value;
+
+        // マップを作成
+        const mapLeft = new maplibregl.Map({
+            container: 'map-left',
+            style: styleUrls[leftStyle],
             center: [139.767, 35.681],
             zoom: 13,
             bearing: 0,
             pitch: 0
         });
 
-        const mapDark = new maplibregl.Map({
-            container: 'map-dark',
-            style: darkStyleUrl,
+        const mapRight = new maplibregl.Map({
+            container: 'map-right',
+            style: styleUrls[rightStyle],
             center: [139.767, 35.681],
             zoom: 13,
             bearing: 0,
             pitch: 0
         });
 
-        const mapPale = new maplibregl.Map({
-            container: 'map-pale',
-            style: paleStyleUrl,
-            center: [139.767, 35.681],
-            zoom: 13,
-            bearing: 0,
-            pitch: 0
-        });
-
-        function syncMaps(maps) {
+        // 2つのマップ間で同期
+        function syncMaps(map1, map2) {
             let isMoving = false;
 
-            maps.forEach((map, index) => {
-                map.on('moveend', () => {
-                    if (isMoving) return;
-                    isMoving = true;
-                    maps.forEach((otherMap, otherIndex) => {
-                        if (index !== otherIndex) {
-                            otherMap.jumpTo({
-                                center: map.getCenter(),
-                                zoom: map.getZoom(),
-                                bearing: map.getBearing(),
-                                pitch: map.getPitch()
-                            });
-                        }
-                    });
-                    isMoving = false;
+            map1.on('moveend', () => {
+                if (isMoving) return;
+                isMoving = true;
+                map2.jumpTo({
+                    center: map1.getCenter(),
+                    zoom: map1.getZoom(),
+                    bearing: map1.getBearing(),
+                    pitch: map1.getPitch()
                 });
+                isMoving = false;
+            });
+
+            map2.on('moveend', () => {
+                if (isMoving) return;
+                isMoving = true;
+                map1.jumpTo({
+                    center: map2.getCenter(),
+                    zoom: map2.getZoom(),
+                    bearing: map2.getBearing(),
+                    pitch: map2.getPitch()
+                });
+                isMoving = false;
             });
         }
 
-        mapLight.on('load', () => {
-            mapDark.on('load', () => {
-                mapPale.on('load', () => {
-                    syncMaps([mapLight, mapDark, mapPale]);
-                });
+        // スタイルを変更する関数
+        function changeStyle(map, style) {
+            map.setStyle(styleUrls[style]);
+        }
+
+        // スタイル選択イベント
+        document.getElementById('left-style-select').addEventListener('change', function(e) {
+            leftStyle = e.target.value;
+            changeStyle(mapLeft, leftStyle);
+        });
+
+        document.getElementById('right-style-select').addEventListener('change', function(e) {
+            rightStyle = e.target.value;
+            changeStyle(mapRight, rightStyle);
+        });
+
+        // マップのロード完了後に同期を開始
+        mapLeft.on('load', () => {
+            mapRight.on('load', () => {
+                syncMaps(mapLeft, mapRight);
             });
         });
+    });
     </script>
 </body>
 </html>
