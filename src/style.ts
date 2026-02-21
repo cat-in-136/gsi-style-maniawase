@@ -1,6 +1,93 @@
 import type { StyleSpecification } from 'maplibre-gl';
 import type { ThemeColors } from './colors';
 
+/// Extract icon-image type from symbol layer in StyleSpecification
+type IconImageType = NonNullable<
+  Extract<StyleSpecification["layers"][number], { type: "symbol" }>["layout"]
+>["icon-image"];
+
+/// Icon ftCode to label mapping for symbol layer with icon-image
+const FTCODE_ICON_RECORD = {
+  3201: "官公署",
+  3202: "裁判所",
+  3203: "税務署",
+  3204: "外国公館",
+  3205: "市役所・東京都の区役所",
+  3206: "町村役場・政令指定都市の区役所",
+  3211: "交番",
+  3212: "高等学校・中等教育学校",
+  3213: "小学校",
+  3214: "小学校",
+  3215: "老人ホーム",
+  3216: "博物館法の登録博物館・博物館相当施設",
+  3217: "図書館",
+  3218: "郵便局",
+  3221: "灯台",
+  3231: "神社",
+  3232: "寺院",
+  3241: "警察署",
+  3242: "消防署",
+  3243: "病院",
+  3244: "保健所",
+  3261: "工場",
+  4101: "煙突",
+  4102: "風車",
+  4103: "油井・ガス井",
+  4104: "記念碑",
+  4105: "自然災害伝承碑",
+  6301: "墓地",
+  6311: "田",
+  6312: "畑",
+  6313: "畑",
+  6314: "畑",
+  6321: "広葉樹林",
+  6322: "針葉樹林",
+  6323: "竹林",
+  6324: "ヤシ科樹林",
+  6325: "ハイマツ地",
+  6326: "笹地",
+  6327: "荒地",
+  6331: "温泉",
+  6332: "噴火口・噴気口",
+  6341: "史跡・名勝・天然記念物",
+  6342: "城跡",
+  6351: "採鉱地",
+  6361: "港湾",
+  6362: "漁港",
+  6371: "国際空港",
+  6381: "自衛隊",
+  8103: "発電所等",
+  8105: "電波塔",
+  7101: "電子基準点",
+  7102: "標高点（測点）",
+  7103: "水準点",
+};
+
+/// Create icon-image expression for symbol layer based on ftCode using match expression
+const createIconMatch = (record: Record<string, string>): IconImageType => {
+  const entries = Object.entries(record).flatMap(([key, val]) => [Number(key), val]) as [number, string, ...[number, string][]];
+  return [
+    "match",
+    ["get", "ftCode"],
+    ...entries,
+    "" // Default value
+  ] as IconImageType;
+};
+
+
+/// Icon ftCode to label mapping excluding baseline triangulation benchmark (710x)
+const FTCODE_ICON_RECORD_WITHOUT_710X = Object.fromEntries(
+  Object.entries(FTCODE_ICON_RECORD).filter(([key]) => !key.startsWith("710"))
+);
+/// Icon ftCode to label mapping for baseline triangulation benchmark (710x)
+const FTCODE_ICON_RECORD_710X = Object.fromEntries(
+  Object.entries(FTCODE_ICON_RECORD).filter(([key]) => key.startsWith("710"))
+);
+/// icon-image value for symbol layer, excluding baseline triangulation benchmark (710x)
+const ICON_IMAGE_710X_EXPRESSION = createIconMatch(FTCODE_ICON_RECORD_710X);
+/// icon-image value for symbol layer for baseline triangulation benchmark (710x)
+const ICON_IMAGE_WITHOUT_710X_EXPRESSION = createIconMatch(FTCODE_ICON_RECORD_WITHOUT_710X);
+
 export function createStyle(colors: ThemeColors): StyleSpecification {
   return {
   "version": 8,
@@ -476,7 +563,7 @@ export function createStyle(colors: ThemeColors): StyleSpecification {
       "type": "symbol",
       "source": "gsibv-vectortile-source-1-4-16",
       "source-layer": "symbol",
-      "filter": ["in", "ftCode", 3201, 3202, 3203, 3204, 3205, 3206, 3211, 3212, 3213, 3214, 3215, 3216, 3217, 3218, 3221, 3231, 3232, 3241, 3242, 3243, 3244, 3261, 4101, 4102, 4103, 4104, 4105, 6301, 6311, 6312, 6313, 6314, 6321, 6322, 6323, 6324, 6325, 6326, 6327, 6331, 6332, 6341, 6342, 6351, 6361, 6362, 6371, 6381, 8103, 8105],
+      "filter": ["in", "ftCode", ...Object.keys(FTCODE_ICON_RECORD_WITHOUT_710X).map(Number)],
       "layout": {
         "icon-size": [
           "interpolate", ["linear"], ["zoom"],
@@ -484,61 +571,7 @@ export function createStyle(colors: ThemeColors): StyleSpecification {
           15, 0.5,
           17, 1
         ],
-        "icon-image": [
-          "match",
-          ["get", "ftCode"],
-          3201, "官公署",
-          3202, "裁判所",
-          3203, "税務署",
-          3204, "外国公館",
-          3205, "市役所・東京都の区役所",
-          3206, "町村役場・政令指定都市の区役所",
-          3211, "交番",
-          3212, "高等学校・中等教育学校",
-          3213, "小学校",
-          3214, "小学校",
-          3215, "老人ホーム",
-          3216, "博物館法の登録博物館・博物館相当施設",
-          3217, "図書館",
-          3218, "郵便局",
-          3221, "灯台",
-          3231, "神社",
-          3232, "寺院",
-          3241, "警察署",
-          3242, "消防署",
-          3243, "病院",
-          3244, "保健所",
-          3261, "工場",
-          4101, "煙突",
-          4102, "風車",
-          4103, "油井・ガス井",
-          4104, "記念碑",
-          4105, "自然災害伝承碑",
-          6301, "墓地",
-          6311, "田",
-          6312, "畑",
-          6313, "畑",
-          6314, "畑",
-          6321, "広葉樹林",
-          6322, "針葉樹林",
-          6323, "竹林",
-          6324, "ヤシ科樹林",
-          6325, "ハイマツ地",
-          6326, "笹地",
-          6327, "荒地",
-          6331, "温泉",
-          6332, "噴火口・噴気口",
-          6341, "史跡・名勝・天然記念物",
-          6342, "城跡",
-          6351, "採鉱地",
-          6361, "港湾",
-          6362, "漁港",
-          6371, "国際空港",
-          6381, "自衛隊",
-          8103, "発電所等",
-          8105, "電波塔",
-          ""
-        ],
+        "icon-image": ICON_IMAGE_WITHOUT_710X_EXPRESSION,
         "icon-pitch-alignment": "viewport",
         "icon-rotation-alignment": "viewport",
         "symbol-placement": "point",
@@ -552,7 +585,7 @@ export function createStyle(colors: ThemeColors): StyleSpecification {
       "source": "gsibv-vectortile-source-1-4-16",
       "source-layer": "symbol",
       "minzoom": 16.25,
-      "filter": ["in", "ftCode", 7101, 7102, 7103],
+      "filter": ["in", "ftCode", ...Object.keys(FTCODE_ICON_RECORD_710X).map(Number)],
       "layout": {
         "text-field": ["to-string", ["case", ["!", ["has", "alti"]], ["to-string", ""], ["==", ["get", "alti"], ""], ["to-string", ""], ["in", ".", ["to-string", ["/", ["round", ["*", ["to-number", ["get", "alti"]], 10]], 10]]], ["to-string", ["/", ["round", ["*", ["to-number", ["get", "alti"]], 10]], 10]], ["concat", ["to-string", ["/", ["round", ["*", ["to-number", ["get", "alti"]], 10]], 10]], ".0"]]],
         "text-size": 10,
@@ -560,14 +593,7 @@ export function createStyle(colors: ThemeColors): StyleSpecification {
         "text-anchor": "left",
         "text-offset": [0.8, -0.1],
         "icon-size": 0.75,
-        "icon-image": [
-          "match",
-          ["get", "ftCode"],
-          7101, "電子基準点",
-          7102, "標高点（測点）",
-          7103, "水準点",
-          ""
-        ],
+        "icon-image": ICON_IMAGE_710X_EXPRESSION,
         "icon-pitch-alignment": "viewport",
         "icon-rotation-alignment": "viewport",
         "symbol-placement": "point",
