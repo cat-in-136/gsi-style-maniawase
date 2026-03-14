@@ -110,6 +110,9 @@ const map = new maplibregl.Map({
 * `src/opencolor-ex.ts` - Open Color 拡張（Brown）
 * `src/validate.ts` - 生成された JSON の検証
 
----
 
-**出典**: このスタイルは国土地理院のベクトルタイル提供に基づいています。利用の際は国土地理院のコンテンツ利用規約を遵守してください。
+## ライセンス (License)
+
+このスタイル定義は [CC0 1.0 Universal (Public Domain Dedication)](https://creativecommons.org/publicdomain/zero/1.0/) のもとで提供されます。
+
+ただし、地図データ自体は国土地理院のベクトルタイル提供に基づいています。利用の際は国土地理院のコンテンツ利用規約を遵守してください。
