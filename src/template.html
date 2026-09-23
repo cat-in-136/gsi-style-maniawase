@@ -4,8 +4,7 @@
     <meta charset="utf-8" />
     <title>GSI Style Maniawase Sample</title>
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
-    <script src="https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.js"></script>
-    <link href="https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.css" rel="stylesheet" />
+    <link href="https://unpkg.com/maplibre-gl@6.5.0/dist/maplibre-gl.css" rel="stylesheet" />
     <style>
         body { margin: 0; padding: 0; height: 100vh; overflow: hidden; display: flex; }
         .map-section { position: relative; width: 50%; height: 100vh; float: left; }
@@ -43,7 +42,9 @@
         </div>
         <div id="map-right"></div>
     </div>
-    <script>
+    <script type="module">
+    import * as maplibregl from 'https://unpkg.com/maplibre-gl@6.5.0/dist/maplibre-gl.mjs';
+
     window.addEventListener('DOMContentLoaded', () => {
         // スタイルURLはオブジェクトとして管理
 
