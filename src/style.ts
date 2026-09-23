@@ -463,7 +463,15 @@ export function createStyle(colors: ThemeColors, styleOverwrite?: Partial<StyleS
         "paint": {
           "line-color": [
             "match",
-            ["floor", ["/", ["to-number", ["get", "rtCode"]], 1000000]],
+            // rtCodeは重複区間でカンマ区切り複合値("40203800009,40203800012"等)に
+            // なることがあるため、カンマ以降を切り落として先頭コードで判定する
+            ["floor", ["/", ["to-number",
+              ["let", "rt", ["to-string", ["get", "rtCode"]],
+                ["case",
+                  ["in", ",", ["var", "rt"]],
+                  ["slice", ["var", "rt"], 0, ["index-of", ",", ["var", "rt"]]],
+                  ["var", "rt"]]]],
+              1000000]],
             [40201, 40216],
             colors.railway,
             colors.railwaySecondary
