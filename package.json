@@ -1,6 +1,6 @@
 {
   "name": "gsi-style-maniawase",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Vector tile style for GSI data, rendered with Open Color palette for a modern and lightweight look.",
   "main": "src/build.js",
   "scripts": {
