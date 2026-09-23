@@ -117,6 +117,7 @@ export function createStyle(colors: ThemeColors, styleOverwrite?: Partial<StyleS
         "type": "fill",
         "source": "gsibv-vectortile-source-1-4-16",
         "source-layer": "waterarea",
+        "filter": ["==", "$type", "Polygon"],
         "paint": { "fill-color": colors.water }
       },
       {
@@ -124,6 +125,7 @@ export function createStyle(colors: ThemeColors, styleOverwrite?: Partial<StyleS
         "type": "fill",
         "source": "gsibv-vectortile-source-1-4-16",
         "source-layer": "landforma",
+        "filter": ["==", "$type", "Polygon"],
         "paint": {
           "fill-color": [
             "match",
@@ -190,18 +192,27 @@ export function createStyle(colors: ThemeColors, styleOverwrite?: Partial<StyleS
         }
       },
       {
-        "id": "structurel",
+        "id": "structurea",
         "type": "fill",
         "source": "gsibv-vectortile-source-1-4-16",
-        "source-layer": "structurel",
-        "filter": ["all", ["in", "ftCode", 5501, 5511, 5514, 5515, 5532, 5501]],
+        "source-layer": "structurea",
+        "filter": ["==", "$type", "Polygon"],
         "paint": { "fill-color": colors.structurel }
+      },
+      {
+        "id": "structurel",
+        "type": "line",
+        "source": "gsibv-vectortile-source-1-4-16",
+        "source-layer": "structurel",
+        "filter": ["all", ["in", "ftCode", 5501, 5511, 5514, 5515, 5532], ["==", "$type", "LineString"]],
+        "paint": { "line-color": colors.structurel, "line-width": 1.5 }
       },
       {
         "id": "wstructurea",
         "type": "fill",
         "source": "gsibv-vectortile-source-1-4-16",
         "source-layer": "wstructurea",
+        "filter": ["==", "$type", "Polygon"],
         "paint": { "fill-color": colors.wstructurea }
       },
       {
@@ -507,6 +518,7 @@ export function createStyle(colors: ThemeColors, styleOverwrite?: Partial<StyleS
         "source": "gsibv-vectortile-source-1-4-16",
         "source-layer": "building",
         "minzoom": 15,
+        "filter": ["==", "$type", "Polygon"],
         "paint": {
           "fill-color": colors.buildingFill,
           "fill-outline-color": colors.buildingOutline
